@@ -55,4 +55,57 @@ Soal 4
 
 Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
 
-Kumpulkan jawaban Anda kepada dosen pengampu sesuai kesepakatan di kelas.
+Jawaban
+
+Null Safety
+
+Null Safety adalah fitur yang diperkenalkan di Dart 2.12 untuk membantu kamu menghindari kesalahan yang umum terjadi saat bekerja dengan nilai `null`. Sebelum Null Safety, variabel di Dart secara default dapat memiliki nilai `null`. Dengan Null Safety, variabel tidak bisa bernilai `null` kecuali jika kamu secara eksplisit mengizinkannya. Ini membuat kode lebih aman dan stabil.
+
+Untuk mengizinkan sebuah variabel bisa bernilai `null`, kamu harus menambahkan tanda tanya (`?`) setelah tipe datanya.
+
+Contoh Null Safety
+
+```dart
+void main() {
+  // Variabel non-nullable (tidak bisa null).
+  // Baris ini akan error jika tidak diinisialisasi.
+  String nama = 'Budi'; 
+  // nama = null; // Ini akan menyebabkan error saat kompilasi
+
+  // Variabel nullable (bisa null).
+  String? alamat; 
+  print(alamat); // Output: null
+
+  // Null Safety juga memengaruhi akses properti atau metode.
+  String? kota;
+  // print(kota.length); // Ini akan error karena 'kota' bisa null
+  
+  // Menggunakan operator '?' untuk mengakses properti dengan aman
+  print(kota?.length); // Output: null. Kode tidak akan error
+}
+```
+
+-----
+
+Late Variabel
+
+Late Variabel adalah variabel yang dideklarasikan dengan kata kunci `late`. Variabel ini dijamin akan diinisialisasi sebelum digunakan. Dengan kata lain, kamu menunda inisialisasi variabel sampai variabel tersebut pertama kali diakses. Ini sangat berguna untuk skenario di mana nilai awal variabel tidak tersedia saat deklarasi, tetapi kamu tahu pasti bahwa nilai tersebut akan tersedia sebelum digunakan.
+
+Contoh Late Variabel
+
+```dart
+void main() {
+  // Deklarasi variabel 'late'
+  late String deskripsi;
+
+  // Variabel belum diinisialisasi, tapi tidak akan error
+  // print(deskripsi); // Ini akan menyebabkan error karena diakses sebelum diinisialisasi
+
+  // Inisialisasi variabel dilakukan di sini, sebelum digunakan
+  deskripsi = 'Ini adalah deskripsi produk.';
+
+  // Variabel sekarang aman untuk diakses
+  print(deskripsi); // Output: Ini adalah deskripsi produk.
+  print(deskripsi.length); // Output: 27
+}
+
