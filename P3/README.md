@@ -27,7 +27,7 @@ void main(){
 
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 program menampilkan dua baris output karena ada dua blok if berbeda yang keduanya benar untuk nilai "test2"
 
@@ -80,7 +80,7 @@ void main() {
 }
 ```
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 
 ---
@@ -100,7 +100,7 @@ while (counter < 33) {
 
 ### Langkah 2
 
-![alt text](image-3.png)
+![alt text](img/image-3.png)
 
 **Penjelasan:**
 Variabel `counter` belum pernah dideklarasikan sebelumnya. Dart butuh tahu apakah `counter` itu `int`, `double`, atau tipe data lainnya.
@@ -128,7 +128,7 @@ Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan 
 `counter` tidak pernah dideklarasikan, sehingga Dart langsung menolak eksekusi.
 **Perbaikan:** deklarasikan variabel `counter` terlebih dahulu, lalu tetap gunakan **`do-while`**.
 
-![alt text](image-4.png)
+![alt text](img/image-4.png)
 
 
 
@@ -151,7 +151,7 @@ Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jela
 
 **Eksekusi kode:**
 
-![alt text](image-5.png)
+![alt text](img/image-5.png)
 
 Error terjadi.
 **Penjelasan:**
@@ -170,7 +170,7 @@ void main() {
 }
 ```
 
-![alt text](image-6.png)
+![alt text](img/image-6.png)
 
 ### Langkah 3
 
@@ -184,7 +184,7 @@ print(index);
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan for dan break-continue.
 
-![alt text](image-7.png)
+![alt text](img/image-7.png)
 
 **Perbaikan:** gunakan variabel yang konsisten (`index` saja), tambahkan `index++`, lalu gunakan **`for`** dengan **`break`** atau **`continue`** sesuai kebutuhan.
 
@@ -198,7 +198,7 @@ void main() {
 }
 ```
 
-![alt text](image-8.png)
+![alt text](img/image-8.png)
 
 ---
 
@@ -228,6 +228,6 @@ bool isPrima(int n) {
 }
 ```
 
-![alt text](image-9.png)
+![alt text](img/image-9.png)
 
-![alt text](image-10.png)
+![alt text](img/image-10.png)
