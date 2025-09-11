@@ -13,7 +13,9 @@ void main() {
     print("Test2 again");
   }
 
+  // cek string "true" dengan if/else
   String test2 = "true";
+
   if (test2 == "true") {
     print("Kebenaran");
   } else {

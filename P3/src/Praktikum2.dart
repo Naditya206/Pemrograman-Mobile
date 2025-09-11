@@ -6,9 +6,9 @@ void main() {
     counter++;
   }
 
-  // lanjut do-while
   do {
-    print(counter);
-    counter++;
-  } while (counter < 77);
+  print(counter);
+  counter++;
+} while (counter < 77);
+
 }
