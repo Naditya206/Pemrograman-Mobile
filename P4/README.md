@@ -1,9 +1,8 @@
-
-# 📘 Praktikum Pemrograman Mobile 04
-
-**Nama**  : Naditya Prastia Andino
-**NIM**   : 244107023008
-**Kelas** : TI-3H  
+  # 📘 Praktikum Pemrograman Mobile 04
+  
+  **Nama**  : Naditya Prastia Andino
+  **NIM**   : 244107023008
+  **Kelas** : TI-3H  
 
 
 ## Praktikum 1: Eksperimen Tipe Data List
