@@ -503,3 +503,69 @@ body: Column(
 ```
 
 -----
+
+Tentu, ini adalah laporan dalam format Markdown berdasarkan gambar yang Anda berikan.
+
+-----
+
+### **Laporan Praktikum 4: Implementasi Image Section**
+
+Laporan ini merinci langkah-langkah untuk menambahkan sebuah gambar sebagai bagian dari tata letak aplikasi Flutter, melanjutkan dari praktikum sebelumnya.
+
+-----
+
+#### **Langkah 1: Siapkan Aset Gambar**
+
+Langkah pertama adalah mempersiapkan file gambar dan mendaftarkannya sebagai aset di dalam proyek Flutter agar dapat digunakan oleh aplikasi.
+
+**Tindakan:**
+
+1.  Buat sebuah folder baru dengan nama `images` di dalam direktori utama (root) proyek `layout_flutter`.
+2.  Cari dan simpan gambar yang ingin Anda tampilkan ke dalam folder `images` tersebut. Beri nama file gambar, contohnya `lake.jpg`.
+3.  Buka file `pubspec.yaml` dan daftarkan folder `images` di bawah bagian `flutter` \> `assets`.
+
+**Kode (`pubspec.yaml`):**
+
+![alt text](image.png)
+
+> **Tips Penting:**
+>
+>   * File `pubspec.yaml` sangat sensitif terhadap format. Perhatikan bahwa `assets:` harus sejajar dengan `uses-material-design:` dan penulisan path gambar harus menjorok ke dalam (menggunakan dua spasi).
+>   * Setelah mengubah file `pubspec.yaml`, Anda mungkin perlu menghentikan dan menjalankan ulang aplikasi (hot restart atau full restart) agar perubahan dapat diterapkan.
+
+-----
+
+#### **Langkah 2: Tambahkan Gambar ke Body**
+
+Setelah aset gambar terdaftar, langkah selanjutnya adalah menampilkannya di dalam aplikasi menggunakan widget `Image.asset`.
+
+**Tindakan:**
+
+Tambahkan widget `Image.asset()` ke dalam `body` aplikasi, tepat di awal daftar `children` dari `ListView` atau `Column`.
+
+**Kode (`lib/main.dart`):**
+
+![alt text](image-1.png)
+
+Properti `fit: BoxFit.cover` memberi tahu Flutter untuk menampilkan gambar sekecil mungkin agar tetap bisa menutupi seluruh area yang tersedia (dalam hal ini, lebar 600 dan tinggi 240) tanpa mengubah rasio aspeknya.
+
+-----
+
+#### **Langkah 3: Terakhir, ubah menjadi ListView**
+
+Pada langkah terakhir ini, atur semua elemen dalam ListView, bukan Column, karena ListView mendukung scroll yang dinamis saat aplikasi dijalankan pada perangkat yang resolusinya lebih kecil.
+
+```dart
+        body: ListView(
+          children: [
+            Image.asset(
+              'assets/images/lake.jpeg',
+              width: 600,
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+            titleSection,
+            buttonSection,
+            textSection,
+          ],
+```

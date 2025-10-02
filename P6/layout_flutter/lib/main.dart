@@ -79,8 +79,12 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            // Anda bisa menambahkan gambar di sini jika perlu
-            // Image.asset('images/lake.jpg', width: 600, height: 240, fit: BoxFit.cover),
+            Image.asset(
+              'assets/images/lake.jpeg',
+              width: 600,
+              height: 240,
+              fit: BoxFit.cover,
+            ),
             titleSection,
             buttonSection,
             textSection,
