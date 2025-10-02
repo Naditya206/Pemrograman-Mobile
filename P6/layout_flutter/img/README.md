@@ -569,3 +569,5 @@ Pada langkah terakhir ini, atur semua elemen dalam ListView, bukan Column, karen
             textSection,
           ],
 ```
+
+![alt text](image-2.png)

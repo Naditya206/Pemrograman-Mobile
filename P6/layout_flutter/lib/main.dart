@@ -7,15 +7,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Bagian 1: Title Section
+    // Definisikan titleSection di dalam metode build
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
           Expanded(
+            /* soal 1 */
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /* soal 2 */
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: const Text(
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Batu, Malang, Indonesia',
+                  'Kandersteg, Switzerland',
                   style: TextStyle(
                     color: Colors.grey[500],
                   ),
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
+          /* soal 3 */
           Icon(
             Icons.star,
             color: Colors.red[500],
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
 
     Color color = Theme.of(context).primaryColor;
 
-    // Bagian 2: Button Section
+    // Definisikan buttonSection di dalam metode build
     Widget buttonSection = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -55,32 +58,31 @@ class MyApp extends StatelessWidget {
       ],
     );
 
-    // Bagian 3: Text Section
+    // Definisikan textSection di dalam metode build
     Widget textSection = Container(
       padding: const EdgeInsets.all(32),
       child: const Text(
-        'Danau Oeschinen terletak di kaki Blüemlisalp di Pegunungan Alpen Bernese. '
-        'Terletak 1.578 meter di atas permukaan laut, ini adalah salah satu '
-        'Danau Alpine yang lebih besar. Naik gondola dari Kandersteg, diikuti dengan '
-        'setengah jam berjalan kaki melalui padang rumput dan hutan pinus, akan membawa Anda ke '
-        'danau, yang menghangat hingga 20 derajat Celcius di musim panas. \n\n'
-        'Nama: Naditya Prastia Andino\n'
-        'NIM: 2441070230008\n\n'
-        'Selamat mengerjakan 😉',
-        softWrap: true,
+        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+        'Alps. Situated 1,578 meters above sea level, it is one of the '
+        'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+        'half-hour walk through pastures and pine forest, leads you to the '
+        'lake, which warms to 20 degrees Celsius in the summer. Activities '
+        'enjoyed here include rowing, and riding the summer toboggan run.',
+        softWrap: true, // softWrap diaktifkan
       ),
     );
 
     return MaterialApp(
-      title: 'Flutter layout: Naditya Prastia Andino dan 2441070230008',
+      title: 'Flutter layout demo',
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Flutter layout demo'),
         ),
+        // Langkah Terakhir: Ubah menjadi ListView
         body: ListView(
           children: [
             Image.asset(
-              'assets/images/lake.jpeg',
+              'images/lake.jpeg',
               width: 600,
               height: 240,
               fit: BoxFit.cover,
@@ -94,7 +96,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  // Method helper untuk membuat kolom tombol
+  // Method untuk membangun kolom tombol
   Column _buildButtonColumn(Color color, IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -116,4 +118,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
