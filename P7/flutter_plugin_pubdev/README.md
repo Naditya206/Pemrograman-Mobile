@@ -34,7 +34,7 @@ Tambahkan plugin **`auto_size_text`** menggunakan perintah berikut:
 flutter pub add auto_size_text
 ```
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 
 
@@ -82,7 +82,7 @@ return AutoSizeText(
 
 ```
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 #### 🧩 Penjelasan Error:
 
@@ -232,7 +232,7 @@ flutter run
 
 ## 📸 Hasil
 
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 
 Setelah dijalankan, akan muncul dua container:
 
