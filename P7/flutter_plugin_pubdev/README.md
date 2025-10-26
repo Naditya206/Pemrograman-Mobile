@@ -1,7 +1,3 @@
-
-
-Berikut laporan praktikum kamu dalam format **Markdown (.md)** sesuai langkah-langkah di atas 👇
-
 ---
 
 # 🧪 Praktikum 7: Menerapkan Plugin di Project Flutter
