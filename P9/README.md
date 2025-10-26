@@ -1,7 +1,3 @@
-Berikut versi hasil **parafrase lengkap** dari laporanmu dengan nama dan NIM sudah diubah sesuai permintaan 👇
-
----
-
 # Praktikum Pemrograman Mobile
 
 **Nama**  : Naditya Prastia Andino
