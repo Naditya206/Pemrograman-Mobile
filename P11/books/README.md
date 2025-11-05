@@ -33,7 +33,7 @@ Commit dengan pesan: `"W11: Soal 3"`
 
 ---
 
-```markdown
+
 ## 📘 W11: Soal 4
 
 ### ✅ Penjelasan Langkah 1 dan 2
@@ -102,3 +102,35 @@ Berikut adalah hasil praktikum saat tombol `GO!` ditekan dan fungsi `count()` di
 ![alt text](img/gif2.gif)
 
 ---
+
+## 🧠 W11: Soal 5
+
+### ✅ Penjelasan Kode Langkah 2
+
+Pada langkah ini, kita menambahkan sebuah variabel dan dua method ke dalam class `_FuturePageState` untuk mengelola proses asynchronous secara manual menggunakan `Completer`.
+
+---
+
+### 🔹 Kode yang Ditambahkan
+
+```dart
+late Completer completer;
+
+Future getNumber() {
+  completer = Completer<int>();
+  calculate();
+  return completer.future;
+}
+
+Future calculate() async {
+  await Future.delayed(const Duration(seconds : 5));
+  completer.complete(42);
+}
+
+```
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
+
+![alt text](img/gif3.gif)
+

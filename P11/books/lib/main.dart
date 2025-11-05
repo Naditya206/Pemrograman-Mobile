@@ -33,6 +33,22 @@ class _FuturePageState extends State<FuturePage> {
   String result = '';
   bool loading = false;
 
+  // ✅ Completer dipindahkan ke level class
+  late Completer<int> completer;
+
+  // ✅ Fungsi getNumber menggunakan Completer
+  Future<int> getNumber() {
+    completer = Completer<int>();
+    calculate();
+    return completer.future;
+  }
+
+  // ✅ Fungsi calculate menyelesaikan Completer setelah delay
+  Future<void> calculate() async {
+    await Future.delayed(const Duration(seconds: 5));
+    completer.complete(42);
+  }
+
   // ✅ Tiga method asynchronous
   Future<int> returnOneAsync() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -52,7 +68,7 @@ class _FuturePageState extends State<FuturePage> {
   // ✅ Fungsi untuk mengambil data dari Google Books API
   Future<String> getData() async {
     const authority = 'www.googleapis.com';
-    const path = '/books/v1/volumes/6wppEQAAQBAJ'; // ID buku contoh
+    const path = '/books/v1/volumes/6wppEQAAQBAJ';
     final url = Uri.https(authority, path);
 
     final response = await http.get(url);
@@ -101,10 +117,25 @@ class _FuturePageState extends State<FuturePage> {
           children: [
             const Spacer(),
 
-            // ✅ Tombol GO! sekarang memanggil count()
+            // ✅ Tombol GO! memanggil getNumber()
             ElevatedButton(
               onPressed: () {
-                count(); // Memanggil fungsi count()
+                setState(() {
+                  loading = true;
+                  result = 'Memanggil getNumber()...';
+                });
+
+                getNumber().then((value) {
+                  setState(() {
+                    result = value.toString();
+                    loading = false;
+                  });
+                }).catchError((error) {
+                  setState(() {
+                    result = 'Terjadi error: $error';
+                    loading = false;
+                  });
+                });
               },
               child: const Text('GO!'),
             ),
