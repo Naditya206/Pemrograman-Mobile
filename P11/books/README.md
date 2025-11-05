@@ -246,3 +246,23 @@ Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan co
 Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
 
 ![alt text](img/gif6.gif)
+
+## 📘 W11: Soal 10
+
+### ✅ Hasil Setelah Menjalankan `handleError()`
+Ketika tombol `ElevatedButton` ditekan dan method `handleError()` dipanggil:
+- Aplikasi menunggu 2 detik
+- Kemudian menampilkan pesan error: `Exception: Something terrible happened!`
+- Konsol mencetak: `Complete`
+
+---
+
+### 🔍 Perbedaan Langkah 1 dan Langkah 4
+
+| Langkah | Teknik Penanganan | Penjelasan |
+|--------|--------------------|------------|
+| 1      | `.catchError()` + `.whenComplete()` | Penanganan error dilakukan setelah `Future` selesai |
+| 4      | `try-catch` dalam `async` function | Penanganan error dilakukan langsung di dalam blok `try` |
+
+**Kesimpulan:**  
+Langkah 1 cocok untuk chaining `Future`, sedangkan Langkah 4 lebih fleksibel untuk logika kompleks dan penanganan terstruktur dalam satu blok.

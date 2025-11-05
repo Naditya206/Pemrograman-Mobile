@@ -67,6 +67,30 @@ class _FuturePageState extends State<FuturePage> {
     throw Exception('Something terrible happened!');
   }
 
+  // ✅ Method untuk menangani error dengan try-catch (Soal 10)
+  Future<void> handleError() async {
+    setState(() {
+      loading = true;
+      result = 'Menjalankan handleError()...';
+    });
+
+    try {
+      await returnError();
+      setState(() {
+        result = 'Success';
+      });
+    } catch (error) {
+      setState(() {
+        result = error.toString();
+      });
+    }
+
+    print('Complete');
+    setState(() {
+      loading = false;
+    });
+  }
+
   // ✅ Tiga method asynchronous
   Future<int> returnOneAsync() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -105,7 +129,7 @@ class _FuturePageState extends State<FuturePage> {
 
             const SizedBox(height: 16),
 
-            // ✅ Tombol untuk menguji returnError()
+            // ✅ Tombol untuk menguji returnError() dengan catchError
             ElevatedButton(
               onPressed: () {
                 setState(() {
@@ -114,21 +138,30 @@ class _FuturePageState extends State<FuturePage> {
                 });
 
                 returnError()
-                  .then((value) {
-                    setState(() {
-                      result = 'Success';
-                    });
-                  })
-                  .catchError((onError) {
-                    setState(() {
-                      result = onError.toString();
-                    });
-                  })
-                  .whenComplete(() => print('Complete'));
+                    .then((value) {
+                      setState(() {
+                        result = 'Success';
+                      });
+                    })
+                    .catchError((onError) {
+                      setState(() {
+                        result = onError.toString();
+                      });
+                    })
+                    .whenComplete(() => print('Complete'));
               },
-              child: const Text('Uji Error'),
+              child: const Text('Uji Error (.catchError)'),
             ),
 
+            const SizedBox(height: 16),
+
+            // ✅ Tombol untuk menguji handleError() dengan try-catch
+            ElevatedButton(
+              onPressed: () {
+                handleError();
+              },
+              child: const Text('Uji Error (try-catch)'),
+            ),
 
             const Spacer(),
             if (loading) const CircularProgressIndicator(),
