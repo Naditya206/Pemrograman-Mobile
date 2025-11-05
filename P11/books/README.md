@@ -21,4 +21,14 @@ Commit dengan pesan: `"W11: Soal 2"`
 
 ![alt text](img/image.png)
 
+### ✅ Soal 3  
+Jelaskan maksud kode pada langkah `ElevatedButton` terkait penggunaan `substring` dan `catchError`.  
+Lampirkan hasil berupa GIF di README.  
+Commit dengan pesan: `"W11: Soal 3"`
+
+* **`substring(0, 300)`** digunakan untuk **memotong hasil data JSON** agar tidak terlalu panjang saat ditampilkan di layar (hanya menampilkan 300 karakter pertama).
+* **`catchError`** digunakan untuk **menangani error** jika proses pengambilan data dari API gagal (misalnya karena koneksi atau URL salah), supaya aplikasi tidak crash dan menampilkan pesan kesalahan yang jelas.
+
+![alt text](img/gif1.gif)
+
 ---
