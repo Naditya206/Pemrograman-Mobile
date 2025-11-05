@@ -313,3 +313,19 @@ Namun setelah **handling error ditambahkan**, kini UI menampilkan pesan teks:
 Berikut adalah hasil praktikum:
 
 ![alt text](img/gif9.gif)
+
+## 🧭 Soal 16
+
+### 1\. Analisis Tombol
+
+  * **Apa yang terjadi?**
+    Saat tombol warna (misal: "Red") di Layar 2 ditekan, Layar 2 akan tertutup dan warna latar belakang di Layar 1 (yang awalnya kuning) berubah menjadi merah.
+
+  * **Mengapa demikian?**
+    Ini terjadi karena alur *Navigator* "push dan pop dengan data":
+
+    1.  **Layar 1 (push):** Menggunakan `await Navigator.push(...)` untuk membuka Layar 2 dan *menunggu* data dikembalikan.
+    2.  **Layar 2 (pop):** Menggunakan `Navigator.pop(context, Colors.red)` untuk menutup diri dan *mengirim* data `Colors.red` kembali ke Layar 1.
+    3.  **Layar 1 (setState):** Menerima data warna tersebut, menyimpannya di variabel `color`, lalu memanggil `setState()` untuk memperbarui UI dengan warna baru.
+
+![alt text](img/gif10.gif)

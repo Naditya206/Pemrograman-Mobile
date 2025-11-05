@@ -2,7 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
-import 'geolocation.dart';
+
+// Import 'geolocation.dart' kemungkinan tidak diperlukan lagi untuk 'home'
+// import 'geolocation.dart'; 
+
+// Import ini WAJIB ditambahkan agar 'NavigationFirst' dikenali
+import 'navigation_first.dart'; // <-- PERUBAHAN 1: Ditambahkan
 
 void main() {
   runApp(const MyApp());
@@ -20,11 +25,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      
       // ✅ Panggil screen baru (Langkah 6)
-      home: const LocationScreen(),
+      // home: const LocationScreen(), // <-- INI BARIS LAMA ANDA
+      home: const NavigationFirst(),   // <-- PERUBAHAN 2: Diubah sesuai instruksi
     );
   }
 }
+
+// -------------------------------------------------------------------
+// KODE FUTUREPAGE DI BAWAH INI TETAP SAMA SEPERTI YANG ANDA BERIKAN
+// -------------------------------------------------------------------
 
 class FuturePage extends StatefulWidget {
   const FuturePage({super.key});
