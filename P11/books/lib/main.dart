@@ -31,26 +31,26 @@ class FuturePage extends StatefulWidget {
 }
 
 class _FuturePageState extends State<FuturePage> {
+  String result = '';
+  bool loading = false;
 
-    void returnFG() {
+  // ✅ Method returnFG menggunakan Future.wait
+  void returnFG() {
     setState(() {
       loading = true;
-      result = 'Menghitung dengan FutureGroup...';
+      result = 'Menghitung dengan Future.wait...';
     });
 
-    FutureGroup<int> futureGroup = FutureGroup<int>();
-    futureGroup.add(returnOneAsync());
-    futureGroup.add(returnTwoAsync());
-    futureGroup.add(returnThreeAsync());
-    futureGroup.close();
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
 
-    futureGroup.future.then((List<int> value) {
-      int total = 0;
-      for (var element in value) {
-        total += element;
-      }
+    futures.then((List<int> value) {
+      int total = value.fold(0, (sum, element) => sum + element);
       setState(() {
-        result = 'Total hasil (FutureGroup): $total';
+        result = 'Total hasil (Future.wait): $total';
         loading = false;
       });
     }).catchError((error) {
@@ -60,30 +60,6 @@ class _FuturePageState extends State<FuturePage> {
       });
     });
   }
-
-  String result = '';
-  bool loading = false;
-
-  // ✅ Completer dipindahkan ke level class
-  late Completer<int> completer;
-
-  // ✅ Fungsi getNumber menggunakan Completer
-  Future<int> getNumber() {
-    completer = Completer<int>();
-    calculate();
-    return completer.future;
-  }
-
-  // ✅ Fungsi calculate menyelesaikan Completer setelah delay
-Future<void> calculate() async {
-  try {
-    await Future.delayed(const Duration(seconds: 5));
-    completer.complete(42); // Menyelesaikan dengan nilai sukses
-    // throw Exception(); // Jika ingin uji error, aktifkan baris ini
-  } catch (_) {
-    completer.completeError('Terjadi kesalahan saat menghitung'); // Menyelesaikan dengan error
-  }
-}
 
   // ✅ Tiga method asynchronous
   Future<int> returnOneAsync() async {
@@ -101,46 +77,6 @@ Future<void> calculate() async {
     return 3;
   }
 
-  // ✅ Fungsi untuk mengambil data dari Google Books API
-  Future<String> getData() async {
-    const authority = 'www.googleapis.com';
-    const path = '/books/v1/volumes/6wppEQAAQBAJ';
-    final url = Uri.https(authority, path);
-
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Gagal memuat data (${response.statusCode})');
-    }
-  }
-
-  // ✅ Method untuk menghitung total dari tiga async function
-  Future<void> count() async {
-    setState(() {
-      loading = true;
-      result = 'Menghitung total dari tiga async function...';
-    });
-
-    try {
-      int total = 0;
-      total = await returnOneAsync();
-      total += await returnTwoAsync();
-      total += await returnThreeAsync();
-
-      setState(() {
-        result = 'Total hasil: $total';
-        loading = false;
-      });
-    } catch (e) {
-      setState(() {
-        result = 'Terjadi error saat menghitung: $e';
-        loading = false;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,35 +89,13 @@ Future<void> calculate() async {
           children: [
             const Spacer(),
 
-            // // ✅ Tombol GO! memanggil getNumber()
-            //               ElevatedButton(
-            //     onPressed: () {
-            //       setState(() {
-            //         loading = true;
-            //         result = 'Memanggil getNumber()...';
-            //       });
-
-            //       getNumber().then((value) {
-            //         setState(() {
-            //           result = value.toString();
-            //           loading = false;
-            //         });
-            //       }).catchError((e) {
-            //         setState(() {
-            //           result = 'An error occurred';
-            //           loading = false;
-            //         });
-            //       });
-            //     },
-            //     child: const Text('GO!'),
-            //   ),
-
-                      ElevatedButton(
-            onPressed: () {
-              returnFG(); // ✅ Memanggil method FutureGroup
-            },
-            child: const Text('GO!'),
-          ),
+            // ✅ Tombol GO! memanggil returnFG dengan Future.wait
+            ElevatedButton(
+              onPressed: () {
+                returnFG();
+              },
+              child: const Text('GO!'),
+            ),
 
             const Spacer(),
             if (loading) const CircularProgressIndicator(),

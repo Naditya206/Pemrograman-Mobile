@@ -168,3 +168,72 @@ Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan co
 Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
 
 ![alt text](img/gif5.gif)
+
+Berikut penjelasan **Soal 8** dalam format **Markdown**, Naditya:
+
+---
+
+## 📘 W11: Soal 8
+
+### ✅ Perbedaan Kode Langkah 1 dan Langkah 4
+
+---
+
+### 🔹 Langkah 1: Menggunakan `FutureGroup`
+
+```dart
+FutureGroup<int> futureGroup = FutureGroup<int>();
+futureGroup.add(returnOneAsync());
+futureGroup.add(returnTwoAsync());
+futureGroup.add(returnThreeAsync());
+futureGroup.close();
+
+futureGroup.future.then((List<int> value) {
+  // proses hasil
+});
+```
+
+**Penjelasan:**
+- `FutureGroup` digunakan untuk mengelola beberapa `Future` secara manual.
+- Kita harus menambahkan setiap `Future` satu per satu menggunakan `.add()`.
+- Setelah semua `Future` ditambahkan, kita harus memanggil `.close()` agar grup siap menunggu hasil.
+- Cocok untuk kasus kompleks di mana `Future` ditambahkan secara dinamis atau bertahap.
+
+---
+
+### 🔹 Langkah 4: Menggunakan `Future.wait`
+
+```dart
+final futures = Future.wait<int>([
+  returnOneAsync(),
+  returnTwoAsync(),
+  returnThreeAsync(),
+]);
+
+futures.then((List<int> value) {
+  // proses hasil
+});
+```
+
+**Penjelasan:**
+- `Future.wait` langsung menerima list of `Future` dan menunggu semuanya selesai.
+- Tidak perlu `.add()` atau `.close()`.
+- Lebih ringkas dan efisien untuk kasus statis di mana semua `Future` sudah diketahui sejak awal.
+
+---
+
+### ⚖️ Perbandingan
+
+| Aspek               | Langkah 1 (`FutureGroup`)                  | Langkah 4 (`Future.wait`)               |
+|---------------------|--------------------------------------------|-----------------------------------------|
+| Struktur            | Manual: `.add()` dan `.close()`            | Otomatis: langsung list `Future`        |
+| Fleksibilitas       | Tinggi, bisa tambah `Future` bertahap      | Rendah, harus tahu semua `Future` awal  |
+| Kompleksitas kode   | Lebih panjang dan eksplisit                | Lebih ringkas dan sederhana             |
+| Cocok untuk         | Dinamis, event-driven                      | Statis, paralel sederhana               |
+
+---
+
+### 🎯 Kesimpulan
+
+- Gunakan `FutureGroup` jika kamu perlu menambahkan `Future` secara bertahap atau berdasarkan kondisi runtime.
+- Gunakan `Future.wait` jika semua `Future` sudah tersedia dan kamu ingin menjalankannya secara paralel dengan kode yang lebih ringkas.
