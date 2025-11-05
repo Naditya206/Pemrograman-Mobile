@@ -237,3 +237,12 @@ futures.then((List<int> value) {
 
 - Gunakan `FutureGroup` jika kamu perlu menambahkan `Future` secara bertahap atau berdasarkan kondisi runtime.
 - Gunakan `Future.wait` jika semua `Future` sudah tersedia dan kamu ingin menjalankannya secara paralel dengan kode yang lebih ringkas.
+
+## 📘 W11: Soal 9
+
+Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 9".
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
+
+![alt text](img/gif6.gif)

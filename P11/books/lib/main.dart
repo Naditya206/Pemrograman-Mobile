@@ -61,6 +61,12 @@ class _FuturePageState extends State<FuturePage> {
     });
   }
 
+  // ✅ Method untuk mensimulasikan error setelah delay
+  Future<void> returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+
   // ✅ Tiga method asynchronous
   Future<int> returnOneAsync() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -96,6 +102,33 @@ class _FuturePageState extends State<FuturePage> {
               },
               child: const Text('GO!'),
             ),
+
+            const SizedBox(height: 16),
+
+            // ✅ Tombol untuk menguji returnError()
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  loading = true;
+                  result = 'Menjalankan returnError()...';
+                });
+
+                returnError()
+                  .then((value) {
+                    setState(() {
+                      result = 'Success';
+                    });
+                  })
+                  .catchError((onError) {
+                    setState(() {
+                      result = onError.toString();
+                    });
+                  })
+                  .whenComplete(() => print('Complete'));
+              },
+              child: const Text('Uji Error'),
+            ),
+
 
             const Spacer(),
             if (loading) const CircularProgressIndicator(),
