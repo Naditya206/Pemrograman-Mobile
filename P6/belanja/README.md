@@ -3,7 +3,7 @@
   
   **Nama**  : Naditya Prastia Andino
   **NIM**   : 244107023008
-  **Kelas** : TI-3H  
+  **Kelas** : TI-3H.  
 
 ## **Langkah 1: Persiapan Project**
 

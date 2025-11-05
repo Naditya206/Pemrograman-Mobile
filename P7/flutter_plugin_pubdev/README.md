@@ -1,6 +1,6 @@
 ---
 
-# 🧪 Praktikum 7: Menerapkan Plugin di Project Flutter
+# 🧪 Praktikum 7: Menerapkan Plugin di Project Flutter.
 
 ## 🎯 Tujuan
 
