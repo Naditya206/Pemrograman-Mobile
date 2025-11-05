@@ -298,3 +298,18 @@ Dengan `FutureBuilder`, kode menjadi:
 Berikut adalah hasil praktikum:
 
 ![alt text](img/gif8.gif)
+
+## 🧭 Soal 14
+
+### 💡 Pertanyaan
+Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
+
+### 💬 Jawaban
+Ya, terdapat perbedaan pada UI.  
+Pada langkah sebelumnya, ketika terjadi error proses mendapatkan lokasi, UI mungkin kosong atau tetap menampilkan loading.  
+Namun setelah **handling error ditambahkan**, kini UI menampilkan pesan teks:
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum:
+
+![alt text](img/gif9.gif)

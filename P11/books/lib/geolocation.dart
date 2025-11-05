@@ -19,12 +19,11 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<Position> getPosition() async {
     await Geolocator.isLocationServiceEnabled();
-    await Future.delayed(const Duration(seconds: 3)); // ⏳ simulasi loading
+    await Future.delayed(const Duration(seconds: 3)); // simulasi delay 3 detik
     Position pos = await Geolocator.getCurrentPosition();
     return pos;
   }
 
-  // 🔹 Langkah 4: Edit method build() agar gunakan FutureBuilder
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +33,18 @@ class _LocationScreenState extends State<LocationScreen> {
           future: position,
           builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // 🔄 Loading animasi
-            } else if (snapshot.connectionState == ConnectionState.done) {
+              return const CircularProgressIndicator(); // 🔄 loading
+            } 
+            // 🔹 Langkah 5: Tambah handling error
+            else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (snapshot.hasData) {
-                return Text(snapshot.data.toString());
+                return const Text('Something terrible happened!'); // pesan error
               }
+              return Text(snapshot.data.toString()); // tampilkan hasil posisi
+            } 
+            else {
+              return const Text('');
             }
-            return const Text('');
           },
         ),
       ),
