@@ -32,3 +32,73 @@ Commit dengan pesan: `"W11: Soal 3"`
 ![alt text](img/gif1.gif)
 
 ---
+
+```markdown
+## 📘 W11: Soal 4
+
+### ✅ Penjelasan Langkah 1 dan 2
+
+#### 🔹 Langkah 1: Membuat Tiga Fungsi Asynchronous
+Pada langkah ini, dibuat tiga fungsi asynchronous:
+```dart
+Future<int> returnOneAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 1;
+}
+Future<int> returnTwoAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 2;
+}
+Future<int> returnThreeAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 3;
+}
+```
+
+**Tujuan:**  
+Ketiga fungsi ini mensimulasikan proses asynchronous (misalnya pengambilan data dari server) dengan delay selama 3 detik, lalu mengembalikan nilai integer masing-masing.
+
+---
+
+#### 🔹 Langkah 2: Membuat Fungsi `count()`
+Fungsi ini digunakan untuk memanggil ketiga fungsi asynchronous di atas secara berurutan dan menjumlahkan hasilnya.
+
+```dart
+Future<void> count() async {
+  setState(() {
+    loading = true;
+    result = 'Menghitung total dari tiga async function...';
+  });
+
+  try {
+    int total = 0;
+    total = await returnOneAsync();
+    total += await returnTwoAsync();
+    total += await returnThreeAsync();
+
+    setState(() {
+      result = 'Total hasil: $total';
+      loading = false;
+    });
+  } catch (e) {
+    setState(() {
+      result = 'Terjadi error saat menghitung: $e';
+      loading = false;
+    });
+  }
+}
+```
+
+**Tujuan:**  
+- Menjalankan ketiga fungsi secara berurutan menggunakan `await`
+- Menjumlahkan hasilnya ke dalam variabel `total`
+- Menampilkan hasil ke UI melalui `setState`
+
+---
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum saat tombol `GO!` ditekan dan fungsi `count()` dijalankan:
+
+![alt text](img/gif2.gif)
+
+---

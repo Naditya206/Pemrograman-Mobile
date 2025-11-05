@@ -33,6 +33,22 @@ class _FuturePageState extends State<FuturePage> {
   String result = '';
   bool loading = false;
 
+  // ✅ Tiga method asynchronous
+  Future<int> returnOneAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 1;
+  }
+
+  Future<int> returnTwoAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 2;
+  }
+
+  Future<int> returnThreeAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 3;
+  }
+
   // ✅ Fungsi untuk mengambil data dari Google Books API
   Future<String> getData() async {
     const authority = 'www.googleapis.com';
@@ -48,26 +64,29 @@ class _FuturePageState extends State<FuturePage> {
     }
   }
 
-  // ✅ Event tombol ditekan
-  void onPressedGetData() {
+  // ✅ Method untuk menghitung total dari tiga async function
+  Future<void> count() async {
     setState(() {
       loading = true;
-      result = 'Mengambil data dari Google Books API...';
+      result = 'Menghitung total dari tiga async function...';
     });
 
-    getData().then((data) {
-      // Ambil sebagian string agar tidak terlalu panjang
-      String preview = data.length > 300 ? data.substring(0, 300) + '...' : data;
+    try {
+      int total = 0;
+      total = await returnOneAsync();
+      total += await returnTwoAsync();
+      total += await returnThreeAsync();
+
       setState(() {
-        result = preview;
+        result = 'Total hasil: $total';
         loading = false;
       });
-    }).catchError((error) {
+    } catch (e) {
       setState(() {
-        result = 'Terjadi error: $error';
+        result = 'Terjadi error saat menghitung: $e';
         loading = false;
       });
-    });
+    }
   }
 
   @override
@@ -81,10 +100,15 @@ class _FuturePageState extends State<FuturePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
+
+            // ✅ Tombol GO! sekarang memanggil count()
             ElevatedButton(
-              onPressed: onPressedGetData,
+              onPressed: () {
+                count(); // Memanggil fungsi count()
+              },
               child: const Text('GO!'),
             ),
+
             const Spacer(),
             if (loading) const CircularProgressIndicator(),
             if (!loading)
