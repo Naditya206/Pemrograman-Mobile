@@ -329,3 +329,23 @@ Berikut adalah hasil praktikum:
     3.  **Layar 1 (setState):** Menerima data warna tersebut, menyimpannya di variabel `color`, lalu memanggil `setState()` untuk memperbarui UI dengan warna baru.
 
 ![alt text](img/gif10.gif)
+
+## 🧭 Soal 17
+
+Tentu, berikut adalah jawaban singkat untuk Soal 17.
+
+### 1\. Analisis Tombol
+
+  * **Apa yang terjadi?**
+    Saat tombol "Change Color" ditekan, sebuah `AlertDialog` muncul di atas layar. Saat Anda memilih warna di dalam dialog (misal: "Biru Pastel"), dialog itu tertutup, dan warna latar belakang layar berubah menjadi Biru Pastel.
+
+  * **Mengapa demikian?**
+    Ini adalah alur *State Management* yang berbeda dari Soal 16:
+
+    1.  Dialog (`AlertDialog`) dan Layar (`Scaffold`) berada dalam **State yang sama** (`_NavigationDialogScreenState`).
+    2.  Saat tombol "Biru Pastel" di dialog ditekan, `onPressed`-nya **langsung mengubah** variabel `color` di dalam State.
+    3.  `Navigator.pop(context)` kemudian dipanggil hanya untuk **menutup dialog**.
+    4.  Kode di method `_showColorDialog` telah *menunggu* (`await`) di baris `showDialog`. Setelah dialog ditutup, eksekusi berlanjut.
+    5.  Baris terakhir, `setState(() {})`, dieksekusi. Ini memberi tahu Flutter untuk **membangun ulang UI**, yang sekarang menggunakan nilai `color` yang sudah diperbarui.
+
+![alt text](img/gif11.gif)
