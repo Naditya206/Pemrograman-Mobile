@@ -134,8 +134,6 @@ Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
 
 ![alt text](img/gif3.gif)
 
-## 📘 W11: Soal 5
-
 ### ✅ Penjelasan Langkah 2
 
 Pada langkah ini, kita menggunakan `Completer` untuk mengelola proses asynchronous secara manual.
@@ -161,3 +159,12 @@ Future calculate() async {
 Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
 
 ![alt text](img/gif4.gif)
+
+## 📘 W11: Soal 7
+
+Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 7".
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
+
+![alt text](img/gif5.gif)

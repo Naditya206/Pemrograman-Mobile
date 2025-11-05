@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:async/async.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,36 @@ class FuturePage extends StatefulWidget {
 }
 
 class _FuturePageState extends State<FuturePage> {
+
+    void returnFG() {
+    setState(() {
+      loading = true;
+      result = 'Menghitung dengan FutureGroup...';
+    });
+
+    FutureGroup<int> futureGroup = FutureGroup<int>();
+    futureGroup.add(returnOneAsync());
+    futureGroup.add(returnTwoAsync());
+    futureGroup.add(returnThreeAsync());
+    futureGroup.close();
+
+    futureGroup.future.then((List<int> value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = 'Total hasil (FutureGroup): $total';
+        loading = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        result = 'Terjadi error saat menghitung: $error';
+        loading = false;
+      });
+    });
+  }
+
   String result = '';
   bool loading = false;
 
@@ -122,28 +153,35 @@ Future<void> calculate() async {
           children: [
             const Spacer(),
 
-            // ✅ Tombol GO! memanggil getNumber()
-                          ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    loading = true;
-                    result = 'Memanggil getNumber()...';
-                  });
+            // // ✅ Tombol GO! memanggil getNumber()
+            //               ElevatedButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         loading = true;
+            //         result = 'Memanggil getNumber()...';
+            //       });
 
-                  getNumber().then((value) {
-                    setState(() {
-                      result = value.toString();
-                      loading = false;
-                    });
-                  }).catchError((e) {
-                    setState(() {
-                      result = 'An error occurred';
-                      loading = false;
-                    });
-                  });
-                },
-                child: const Text('GO!'),
-              ),
+            //       getNumber().then((value) {
+            //         setState(() {
+            //           result = value.toString();
+            //           loading = false;
+            //         });
+            //       }).catchError((e) {
+            //         setState(() {
+            //           result = 'An error occurred';
+            //           loading = false;
+            //         });
+            //       });
+            //     },
+            //     child: const Text('GO!'),
+            //   ),
+
+                      ElevatedButton(
+            onPressed: () {
+              returnFG(); // ✅ Memanggil method FutureGroup
+            },
+            child: const Text('GO!'),
+          ),
 
             const Spacer(),
             if (loading) const CircularProgressIndicator(),
