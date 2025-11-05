@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
+import 'geolocation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // ✅ Tambahkan nama panggilan pada title
       title: 'Books - Naditya',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const FuturePage(),
+      // ✅ Panggil screen baru (Langkah 6)
+      home: const LocationScreen(),
     );
   }
 }
@@ -67,7 +70,7 @@ class _FuturePageState extends State<FuturePage> {
     throw Exception('Something terrible happened!');
   }
 
-  // ✅ Method untuk menangani error dengan try-catch (Soal 10)
+  // ✅ Method untuk menangani error dengan try-catch
   Future<void> handleError() async {
     setState(() {
       loading = true;
@@ -111,6 +114,7 @@ class _FuturePageState extends State<FuturePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // ✅ Tambahkan nama panggilan juga di title AppBar
         title: const Text('Back from the Future - Naditya'),
       ),
       body: Center(

@@ -266,3 +266,19 @@ Ketika tombol `ElevatedButton` ditekan dan method `handleError()` dipanggil:
 
 **Kesimpulan:**  
 Langkah 1 cocok untuk chaining `Future`, sedangkan Langkah 4 lebih fleksibel untuk logika kompleks dan penanganan terstruktur dalam satu blok.
+
+### Jawaban Soal 12
+
+Tidak, koordinat GPS **tidak muncul saat dijalankan di browser**.  
+Hal ini karena **Flutter Web tidak memiliki akses langsung ke sensor GPS perangkat**, sehingga `geolocator` tidak dapat mengambil data lokasi fisik.  
+Animasi loading ditampilkan selama 3 detik menggunakan:
+```dart
+await Future.delayed(const Duration(seconds: 3));
+```
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum:
+
+![alt text](img/gif7.gif)
+
+
