@@ -16,7 +16,7 @@ Tambahkan nama panggilan Anda pada title app sebagai identitas hasil pekerjaan A
 
 ### ✅ Soal 2  
 Carilah judul buku favorit Anda di Google Books, lalu ganti ID buku pada variabel `path` di kode tersebut.  
-Lakukan capture hasil JSON dan tulis di README.  
+Lakukan capture hasil JSON dan tulis di README  
 Commit dengan pesan: `"W11: Soal 2"`
 
 ![alt text](img/image.png)
