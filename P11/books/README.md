@@ -134,3 +134,30 @@ Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
 
 ![alt text](img/gif3.gif)
 
+## 📘 W11: Soal 5
+
+### ✅ Penjelasan Langkah 2
+
+Pada langkah ini, kita menggunakan `Completer` untuk mengelola proses asynchronous secara manual.
+
+#### 🔹 Kode yang Ditambahkan
+
+```dart
+late Completer completer;
+
+Future getNumber() {
+  completer = Completer<int>();
+  calculate();
+  return completer.future;
+}
+
+Future calculate() async {
+  await Future.delayed(const Duration(seconds: 5));
+  completer.complete(42);
+}
+```
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum saat tombol `GO!` ditekan:
+
+![alt text](img/gif4.gif)

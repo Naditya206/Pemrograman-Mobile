@@ -44,10 +44,15 @@ class _FuturePageState extends State<FuturePage> {
   }
 
   // ✅ Fungsi calculate menyelesaikan Completer setelah delay
-  Future<void> calculate() async {
+Future<void> calculate() async {
+  try {
     await Future.delayed(const Duration(seconds: 5));
-    completer.complete(42);
+    completer.complete(42); // Menyelesaikan dengan nilai sukses
+    // throw Exception(); // Jika ingin uji error, aktifkan baris ini
+  } catch (_) {
+    completer.completeError('Terjadi kesalahan saat menghitung'); // Menyelesaikan dengan error
   }
+}
 
   // ✅ Tiga method asynchronous
   Future<int> returnOneAsync() async {
@@ -118,27 +123,27 @@ class _FuturePageState extends State<FuturePage> {
             const Spacer(),
 
             // ✅ Tombol GO! memanggil getNumber()
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  loading = true;
-                  result = 'Memanggil getNumber()...';
-                });
+                          ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    loading = true;
+                    result = 'Memanggil getNumber()...';
+                  });
 
-                getNumber().then((value) {
-                  setState(() {
-                    result = value.toString();
-                    loading = false;
+                  getNumber().then((value) {
+                    setState(() {
+                      result = value.toString();
+                      loading = false;
+                    });
+                  }).catchError((e) {
+                    setState(() {
+                      result = 'An error occurred';
+                      loading = false;
+                    });
                   });
-                }).catchError((error) {
-                  setState(() {
-                    result = 'Terjadi error: $error';
-                    loading = false;
-                  });
-                });
-              },
-              child: const Text('GO!'),
-            ),
+                },
+                child: const Text('GO!'),
+              ),
 
             const Spacer(),
             if (loading) const CircularProgressIndicator(),
