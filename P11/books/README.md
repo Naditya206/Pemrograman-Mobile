@@ -281,4 +281,20 @@ Berikut adalah hasil praktikum:
 
 ![alt text](img/gif7.gif)
 
+## 🧭 Soal 13
 
+### 💡 Pertanyaan
+Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
+
+### 💬 Jawaban
+Ya, ada perbedaan pada UI.  
+Pada praktikum sebelumnya, **animasi loading dan hasil lokasi diatur secara manual dengan `setState()`**, sedangkan pada praktikum ini digunakan **`FutureBuilder`** yang secara otomatis **merebuild UI** berdasarkan status `Future`.  
+
+Dengan `FutureBuilder`, kode menjadi:
+- Lebih **efisien** karena tidak perlu memanggil `setState()` berulang kali.  
+- Lebih **clean dan reaktif**, karena UI langsung menyesuaikan status `Future` (loading, selesai, atau error).  
+
+### 🎥 Hasil Praktikum (GIF)
+Berikut adalah hasil praktikum:
+
+![alt text](img/gif8.gif)
