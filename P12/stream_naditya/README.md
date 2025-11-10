@@ -132,5 +132,55 @@ Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
 
 ![alt text](img/gif1.gif)
 
+### 💡 **Soal 5**
+
+Jelaskan perbedaan menggunakan `listen` dan `await for` (Langkah 9):
+
+| Pendekatan     | Penjelasan                                                                 |
+|----------------|----------------------------------------------------------------------------|
+| `await for`    | Digunakan dalam fungsi `async`, menunggu setiap event dari stream satu per satu. Cocok untuk alur linear dan sederhana. |
+| `listen`       | Menggunakan callback untuk setiap event stream. Lebih fleksibel, bisa di-cancel, pause, atau resume. Cocok untuk kontrol lanjutan. |
+
+🔍 **Perbandingan Teknis:**
+
+- `await for`:
+  - Lebih mudah dibaca untuk alur sekuensial.
+  - Tidak bisa dihentikan di tengah jalan tanpa logika tambahan.
+  - Tidak menghasilkan `StreamSubscription`.
+
+- `listen`:
+  - Menghasilkan `StreamSubscription` → bisa di-cancel di `dispose`.
+  - Cocok untuk UI yang perlu kontrol penuh terhadap stream.
+  - Bisa digunakan di luar fungsi `async`.
+
+📌 **Kesimpulan:**
+Gunakan `await for` untuk alur sederhana dan satu arah. Gunakan `listen` jika butuh kontrol lebih seperti menghentikan stream atau mengelola lifecycle widget.
+
+
+### 💡 **Soal 6**
+
+#### 📘 Penjelasan Langkah 8 dan 10
+
+| Langkah | Kode                              | Penjelasan                                                                 |
+|--------|------------------------------------|----------------------------------------------------------------------------|
+| 8      | `numberStreamController.stream.listen(...)` | Mendengarkan stream angka dari `NumberStream`. Setiap angka yang masuk akan disimpan ke variabel `lastNumber` dan ditampilkan di UI. |
+| 10     | `addRandomNumber()`               | Membuat angka acak dari 0–9 menggunakan `Random()`, lalu mengirimnya ke stream melalui `addNumberToSink()`. Stream akan memicu listener di Langkah 8. |
+
+🔄 **Alur Singkat:**
+1. Tombol ditekan → `addRandomNumber()` dipanggil.
+2. Angka acak dikirim ke stream.
+3. Listener di Langkah 8 menerima angka → UI diperbarui.
+
+---
+
+#### 📸 Hasil Praktikum
+
+Berikut adalah hasil praktikum berupa GIF yang menunjukkan alur stream angka dan perubahan UI:
+
+![alt text](img/gif2.gif)
+
+---
+
+
 
 
