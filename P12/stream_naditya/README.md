@@ -126,3 +126,11 @@ Jadi, fungsi ini akan **menghasilkan warna baru setiap detik secara berulang**, 
 
 ---
 
+### 💡 **Soal 4**
+
+Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+![alt text](img/gif1.gif)
+
+
+

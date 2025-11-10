@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'stream.dart'; // Pastikan file ini tersedia
 
 void main() {
   runApp(const MyApp());
@@ -27,8 +28,48 @@ class StreamHomePage extends StatefulWidget {
 }
 
 class _StreamHomePageState extends State<StreamHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+  // ✅ Langkah 8: Tambah variabel
+  Color bgColor = Colors.blueGrey; // Warna awal background
+  late ColorStream colorStream;    // Objek stream warna
+
+  // ✅ Langkah 9: Tambah method changeColor()
+  void changeColor() async {
+    await for (var eventColor in colorStream.getColors()) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    colorStream = ColorStream(); // ✅ Inisialisasi objek stream
+    changeColor();               // ✅ Mulai mendengarkan stream warna
+  }
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Stream - Naditya'), // ✅ Branding pribadi
+    ),
+    body: Container(
+      decoration: BoxDecoration(
+        color: bgColor, // ✅ Warna dari stream
+      ),
+      child: const Center(
+        child: Text(
+          'Warna sedang berubah...', // ✅ Teks informatif
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 }
