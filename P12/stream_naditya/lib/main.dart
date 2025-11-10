@@ -30,7 +30,6 @@ class StreamHomePage extends StatefulWidget {
 }
 
 class _StreamHomePageState extends State<StreamHomePage> {
-  // ✅ Langkah 8: Tambah variabel
   Color bgColor = Colors.blueGrey;
   late ColorStream colorStream;
 
@@ -38,7 +37,6 @@ class _StreamHomePageState extends State<StreamHomePage> {
   late StreamController<int> numberStreamController;
   late NumberStream numberStream;
 
-  // ✅ Langkah 13: Versi baru menggunakan listen()
   void changeColor() {
     colorStream.getColors().listen((eventColor) {
       setState(() {
@@ -47,37 +45,42 @@ class _StreamHomePageState extends State<StreamHomePage> {
     });
   }
 
-  // ✅ Langkah 10: Tambah method addRandomNumber()
+  // ✅ Langkah 15: Edit method addRandomNumber()
   void addRandomNumber() {
-    Random random = Random();
-    int myNum = random.nextInt(10);
-    numberStream.addNumberToSink(myNum);
+    // final number = Random().nextInt(10);
+    // int myNum = Random().nextInt(10);
+    int myNum = Random().nextInt(10); // ✅ Tetap gunakan angka acak
+    numberStream.addNumberToSink(myNum); // ✅ Kirim ke stream
+    numberStream.addError();             // ✅ Tambahkan error ke stream
   }
 
   @override
   void initState() {
     super.initState();
-    colorStream = ColorStream(); // ✅ Inisialisasi stream warna
-    changeColor();               // ✅ Mulai stream warna
+    colorStream = ColorStream();
+    changeColor();
 
-    numberStream = NumberStream(); // ✅ Inisialisasi stream angka
+    numberStream = NumberStream();
     numberStreamController = numberStream.controller;
 
+    // ✅ Langkah 14: Tambah onError
     numberStreamController.stream.listen((event) {
       setState(() {
         lastNumber = event;
       });
+    }, onError: (error) {
+      setState(() {
+        lastNumber = -1; // ✅ Tampilkan -1 saat error
+      });
     });
   }
 
-  // ✅ Langkah 9: Edit dispose()
   @override
   void dispose() {
-    numberStreamController.close(); // ✅ Hindari memory leak
+    numberStreamController.close();
     super.dispose();
   }
 
-  // ✅ Langkah 11: Edit build()
   @override
   Widget build(BuildContext context) {
     return Scaffold(

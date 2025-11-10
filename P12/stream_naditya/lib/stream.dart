@@ -36,4 +36,7 @@ class NumberStream {
 void close() {
   controller.close();
 }
+  void addError() {
+    controller.sink.addError('error'); // ✅ Langkah 13
+  }
 }
