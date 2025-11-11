@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'stream.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Stream - Naditya',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: const StreamHomePage(),
     );
@@ -30,95 +29,74 @@ class StreamHomePage extends StatefulWidget {
 }
 
 class _StreamHomePageState extends State<StreamHomePage> {
-  Color bgColor = Colors.blueGrey;
-  late ColorStream colorStream;
-
-  int lastNumber = 0;
-  late StreamController<int> numberStreamController;
-  late NumberStream numberStream;
-
-  void changeColor() {
-    colorStream.getColors().listen((eventColor) {
-      setState(() {
-        bgColor = eventColor;
-      });
-    });
-  }
-
-  // ✅ Langkah 15: Edit method addRandomNumber()
-  void addRandomNumber() {
-    // final number = Random().nextInt(10);
-    // int myNum = Random().nextInt(10);
-    int myNum = Random().nextInt(10); // ✅ Tetap gunakan angka acak
-    numberStream.addNumberToSink(myNum); // ✅ Kirim ke stream
-    numberStream.addError();             // ✅ Tambahkan error ke stream
-  }
+  late StreamController<int> _streamController;
+  late StreamTransformer<int, int> transformer;
+  String _text = '0';
 
   @override
   void initState() {
     super.initState();
-    colorStream = ColorStream();
-    changeColor();
 
-    numberStream = NumberStream();
-    numberStreamController = numberStream.controller;
+    _streamController = StreamController<int>();
 
-    // ✅ Langkah 14: Tambah onError
-    numberStreamController.stream.listen((event) {
+    transformer = StreamTransformer<int, int>.fromHandlers(
+      handleData: (value, sink) {
+        sink.add(value * 10); // nilai dikalikan 10
+      },
+      handleError: (error, trace, sink) {
+        sink.add(-1); // jika error kirim -1
+      },
+      handleDone: (sink) => sink.close(),
+    );
+
+    _streamController.stream.transform(transformer).listen((event) {
       setState(() {
-        lastNumber = event;
+        _text = '$event';
       });
-    }, onError: (error) {
+    }).onError((error) {
       setState(() {
-        lastNumber = -1; // ✅ Tampilkan -1 saat error
+        _text = '-1';
       });
     });
   }
 
   @override
   void dispose() {
-    numberStreamController.close();
+    _streamController.close();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Stream - Naditya'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: bgColor,
-        ),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                lastNumber.toString(),
-                style: const TextStyle(fontSize: 32, color: Colors.white),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => addRandomNumber(),
-                child: const Text("New Random Number"),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Warna sedang berubah...',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  void addRandomNumber() {
+    int number = Random().nextInt(10);
+    _streamController.sink.add(number);
   }
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+        appBar: AppBar(
+      backgroundColor: Colors.blue, // Warna latar AppBar
+      title: const Text(
+        'Stream - Naditya',
+        style: TextStyle(color: Colors.white), // ✅ Teks putih
+      ),
+    ),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            _text,
+            style: const TextStyle(fontSize: 48),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: addRandomNumber,
+            child: const Text('New Random Number'),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 }

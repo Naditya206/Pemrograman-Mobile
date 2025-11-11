@@ -203,6 +203,38 @@ void addRandomNumber() {
   numberStream.addNumberToSink(myNum);
   // numberStream.addError(); // ✅ Dikomentari untuk lanjut praktikum 3
 }
+``` 
+
+### 💡 **Soal 7**
+
+#### 📘 Penjelasan Langkah 13–15
+
+| Langkah | Kode                              | Penjelasan                                                                 |
+|--------|------------------------------------|----------------------------------------------------------------------------|
+| 13     | `addError()`                       | Method ini menambahkan error ke stream menggunakan `controller.sink.addError('error')`. Tujuannya untuk menguji bagaimana aplikasi menangani error dalam alur stream. |
+| 14     | `onError` di `listen()`            | Callback ini menangani error yang dikirim dari stream. Saat error terjadi, nilai `lastNumber` diubah menjadi `-1` agar UI bisa menampilkan status error. |
+| 15     | `addRandomNumber()`                | Method ini mengirim angka acak ke stream dan juga memicu error dengan `addError()`. Ini menunjukkan bagaimana stream bisa menerima data dan error secara bersamaan. |
+
+---
+
+#### 🔁 Kembalikan Kode Langkah 15
+
+Untuk melanjutkan ke praktikum berikutnya, kode pada method `addRandomNumber()` dikembalikan seperti semula dengan **komentar pada `addError()`**:
+
+```dart
+void addRandomNumber() {
+  int myNum = Random().nextInt(10);
+  numberStream.addNumberToSink(myNum);
+  // numberStream.addError(); // ✅ Dikomentari untuk lanjut praktikum 3
+}
+
+```
+
+#### 📸 Hasil Praktikum
+
+Berikut adalah hasil praktikum berupa GIF yang menunjukkan alur stream angka dan perubahan UI:
+
+![alt text](img/gif3a.gif)
 
 
 
