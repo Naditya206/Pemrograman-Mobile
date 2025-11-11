@@ -205,30 +205,17 @@ void addRandomNumber() {
 }
 ``` 
 
-### 💡 **Soal 7**
+## ✅ Soal 8 – StreamController dan StreamTransformer
 
-#### 📘 Penjelasan Langkah 13–15
+### 📘 Penjelasan Langkah 1–3
 
-| Langkah | Kode                              | Penjelasan                                                                 |
-|--------|------------------------------------|----------------------------------------------------------------------------|
-| 13     | `addError()`                       | Method ini menambahkan error ke stream menggunakan `controller.sink.addError('error')`. Tujuannya untuk menguji bagaimana aplikasi menangani error dalam alur stream. |
-| 14     | `onError` di `listen()`            | Callback ini menangani error yang dikirim dari stream. Saat error terjadi, nilai `lastNumber` diubah menjadi `-1` agar UI bisa menampilkan status error. |
-| 15     | `addRandomNumber()`                | Method ini mengirim angka acak ke stream dan juga memicu error dengan `addError()`. Ini menunjukkan bagaimana stream bisa menerima data dan error secara bersamaan. |
+| Langkah | Kode                                                                 | Penjelasan                                                                 |
+|--------|----------------------------------------------------------------------|----------------------------------------------------------------------------|
+| 1      | `late StreamController<int> _streamController;`                      | Membuat controller untuk mengelola aliran data bertipe `int`. Digunakan untuk mengirim data ke stream. |
+| 2      | `transformer = StreamTransformer<int, int>.fromHandlers(...)`        | Membuat transformer yang memproses data sebelum diteruskan ke listener. Di sini, data dikalikan 10 dan jika terjadi error, nilai -1 dikirim. |
+| 3      | `stream.transform(transformer).listen(...)`                          | Mendengarkan stream yang sudah ditransformasi. Hasilnya ditampilkan di UI, dan jika terjadi error, teks akan berubah menjadi `-1`. |
 
 ---
-
-#### 🔁 Kembalikan Kode Langkah 15
-
-Untuk melanjutkan ke praktikum berikutnya, kode pada method `addRandomNumber()` dikembalikan seperti semula dengan **komentar pada `addError()`**:
-
-```dart
-void addRandomNumber() {
-  int myNum = Random().nextInt(10);
-  numberStream.addNumberToSink(myNum);
-  // numberStream.addError(); // ✅ Dikomentari untuk lanjut praktikum 3
-}
-
-```
 
 #### 📸 Hasil Praktikum
 
@@ -236,5 +223,68 @@ Berikut adalah hasil praktikum berupa GIF yang menunjukkan alur stream angka dan
 
 ![alt text](img/gif3a.gif)
 
+## ✅ Soal 9 – Stream Subscription dan Stop Mechanism
+
+### 📘 Penjelasan Langkah 2, 6, dan 8
+
+| Langkah | Kode / Konsep                              | Penjelasan                                                                 |
+|--------|---------------------------------------------|----------------------------------------------------------------------------|
+| 2      | `StreamSubscription subscription;`          | Variabel ini menyimpan langganan (listener) terhadap stream. Berguna untuk mengontrol dan menghentikan stream secara manual. |
+| 6      | `subscription = stream.listen(...)`         | Langkah ini mengaktifkan listener terhadap stream. Data yang masuk akan diproses dan ditampilkan di UI. |
+| 8      | `subscription.cancel();`                    | Perintah ini menghentikan langganan stream. Setelah dipanggil, stream tidak akan lagi mengirim data ke listener. Biasanya digunakan saat tombol "Stop Subscription" ditekan. |
+
+---
+
+#### 📸 Hasil Praktikum
+
+Berikut adalah hasil praktikum berupa GIF:
+
+![alt text](img/gif4.gif)
+
+## ✅ Soal 10 – Penjelasan Error: "Bad state: Stream has already been listened to"
+
+![alt text](img/img1.png)
+
+### 🧠 Penyebab Error
+
+Error ini terjadi karena **stream yang sama didengarkan lebih dari satu kali** tanpa menggunakan `broadcast`. Secara default, stream di Dart bersifat **single-subscription**, artinya hanya boleh ada satu listener aktif pada satu waktu.
+
+Contoh pemicu error:
+```dart
+Stream<int> stream = controller.stream;
+
+subscription1 = stream.listen(...);
+subscription2 = stream.listen(...); // ❌ Error terjadi di sini
+
+```
+
+## ✅ Soal 11 – Penjelasan Stream Broadcast dan Duplikasi Data
+
+### 🧠 Penjelasan: Mengapa Angka Bertambah Dua Kali?
+
+Hal tersebut terjadi karena stream yang digunakan adalah **broadcast stream**, yang memungkinkan **lebih dari satu subscriber** mendengarkan data yang sama secara bersamaan.
+
+Setiap kali tombol **"New Random Number"** ditekan:
+- Dua angka acak dikirim ke stream.
+- Karena stream bersifat broadcast, **setiap subscriber menerima semua data**.
+- Maka, jika ada dua subscriber (`subscription1` dan `subscription2`), **setiap angka akan diproses dua kali**, dan ditampilkan dua kali di UI.
+
+Contoh kode:
+```dart
+stream = numberStreamController.stream.asBroadcastStream();
+
+subscription1 = stream.listen((event) {
+  list1.add(event);
+});
+
+subscription2 = stream.listen((event) {
+  list2.add(event);
+});
+```
+#### 📸 Hasil Praktikum
+
+Berikut adalah hasil praktikum berupa GIF:
+
+![alt text](img/gif5.gif)
 
 

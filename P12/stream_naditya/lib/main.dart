@@ -29,74 +29,104 @@ class StreamHomePage extends StatefulWidget {
 }
 
 class _StreamHomePageState extends State<StreamHomePage> {
-  late StreamController<int> _streamController;
-  late StreamTransformer<int, int> transformer;
-  String _text = '0';
+  late StreamController<int> numberStreamController;
+  late StreamSubscription subscription;
+  late StreamSubscription subscription2;
+  late Stream<int> stream; // untuk broadcast stream
+  int lastNumber = 0;
+  String values = "";
 
   @override
   void initState() {
     super.initState();
 
-    _streamController = StreamController<int>();
+    // ✅ Langkah 4: Set broadcast stream
+    numberStreamController = StreamController<int>();
+    stream = numberStreamController.stream.asBroadcastStream();
 
-    transformer = StreamTransformer<int, int>.fromHandlers(
-      handleData: (value, sink) {
-        sink.add(value * 10); // nilai dikalikan 10
-      },
-      handleError: (error, trace, sink) {
-        sink.add(-1); // jika error kirim -1
-      },
-      handleDone: (sink) => sink.close(),
-    );
-
-    _streamController.stream.transform(transformer).listen((event) {
+    subscription = stream.listen((event) {
       setState(() {
-        _text = '$event';
-      });
-    }).onError((error) {
-      setState(() {
-        _text = '-1';
+        lastNumber = event;
       });
     });
+
+    // ✅ Perbaikan: tambahkan angka terus, bukan ganti
+    subscription2 = stream.listen((event) {
+      setState(() {
+        values += "$event "; // menambah angka ke deretan teks
+      });
+    });
+
+    subscription.onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+
+    subscription.onDone(() {
+      print("onDone was called");
+    });
+  }
+
+  void stopStream() {
+    numberStreamController.close();
+  }
+
+  void addRandomNumber() {
+    Random random = Random();
+    int myNum = random.nextInt(10);
+    if (!numberStreamController.isClosed) {
+      numberStreamController.sink.add(myNum);
+    } else {
+      setState(() {
+        lastNumber = -1;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _streamController.close();
+    subscription.cancel();
+    subscription2.cancel();
+    numberStreamController.close();
     super.dispose();
   }
 
-  void addRandomNumber() {
-    int number = Random().nextInt(10);
-    _streamController.sink.add(number);
+  @override
+  Widget build(BuildContext context) {
+    // ✅ Langkah 5: Tambahkan Text(values)
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Stream - Naditya',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '$lastNumber',
+              style: const TextStyle(fontSize: 48),
+            ),
+            Text(
+              values,
+              style: const TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              onPressed: addRandomNumber,
+              child: const Text('New Random Number'),
+            ),
+            ElevatedButton(
+              onPressed: stopStream,
+              child: const Text('Stop Stream'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
-
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-        appBar: AppBar(
-      backgroundColor: Colors.blue, // Warna latar AppBar
-      title: const Text(
-        'Stream - Naditya',
-        style: TextStyle(color: Colors.white), // ✅ Teks putih
-      ),
-    ),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            _text,
-            style: const TextStyle(fontSize: 48),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: addRandomNumber,
-            child: const Text('New Random Number'),
-          ),
-        ],
-      ),
-    ),
-  );
-}
 }
