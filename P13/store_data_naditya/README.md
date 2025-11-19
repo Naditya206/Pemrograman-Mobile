@@ -1,16 +1,47 @@
-# store_data_naditya
+# Praktikum 1: Konversi Dart model ke JSON
 
-A new Flutter project.
+### ✅ **Soal 1**
 
-## Getting Started
+**Instruksi:**
 
-This project is a starting point for a Flutter application.
+- Tambahkan nama panggilan Anda pada `title` aplikasi sebagai identitas hasil pekerjaan.
+- Ganti warna tema aplikasi sesuai dengan kesukaan Anda.
+- Lakukan commit dengan pesan:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+W13: Jawaban Soal 1
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Implementasi:**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Title aplikasi diubah menjadi: `JSON Naditya`
+- Warna tema aplikasi diubah menjadi: `Colors.blue`
+
+```dart
+MaterialApp(
+  title: 'JSON Naditya',
+  theme: ThemeData(
+    primarySwatch: Colors.blue,
+  ),
+  home: const MyHomePage(),
+)
+```
+
+---
+
+### ✅ **Soal 2**
+
+**Instruksi:**
+
+- Masukkan hasil capture layar ke dalam laporan praktikum.
+- Lakukan commit dengan pesan:
+
+```bash
+W13: Jawaban Soal 2
+```
+
+**Dokumentasi:**
+
+![alt text](img/img1.png)
+
+---

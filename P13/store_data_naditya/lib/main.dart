@@ -28,13 +28,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String pizzaString = ""; // Variabel untuk menyimpan isi JSON
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('JSON'),
-      ),
-      body: Container(),
-    );
+  void initState() {
+    super.initState();
+    readJsonFile(); // Panggil method saat widget diinisialisasi
   }
+
+  Future<void> readJsonFile() async {
+    String myString = await DefaultAssetBundle.of(context)
+        .loadString("assets/pizzalist.json");
+    setState(() {
+      pizzaString = myString;
+    });
+  }
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      backgroundColor: Colors.blue,
+      foregroundColor: Colors.white,
+      title: const Text('JSON Naditya'),
+    ),
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Text(pizzaString),
+    ),
+  );
 }
+}
+
