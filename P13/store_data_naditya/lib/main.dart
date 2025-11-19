@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,17 +34,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Pizza> myPizzas = [];
   int appCounter = 0;
-  
-  // Langkah 3: Tambahkan variabel Path State
   String documentsPath = '';
   String tempPath = '';
+  
+  // Langkah 2: Tambahkan variabel File dan Text
+  late File myFile;
+  String fileText = '';
 
   @override
   void initState() {
     super.initState();
-    // Langkah 5: Panggil getPaths() di initState()
     getPaths();
-    
     readAndWritePreference();
     
     readJsonFile().then((value) {
@@ -53,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // Langkah 4: Buat Method getPaths()
   Future<void> getPaths() async {
     final docDir = await getApplicationDocumentsDirectory();
     final tempDir = await getTemporaryDirectory();
@@ -62,6 +62,35 @@ class _MyHomePageState extends State<MyHomePage> {
       documentsPath = docDir.path;
       tempPath = tempDir.path;
     });
+    
+    // Langkah 4: Inisialisasi File dan Panggil writeFile()
+    myFile = File('$documentsPath/pizzas.txt');
+    writeFile();
+  }
+
+  // Langkah 3: Buat Method writeFile()
+  Future<bool> writeFile() async {
+    try {
+      await myFile.writeAsString('Naditya, 244107023008');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Langkah 5: Buat Method readFile()
+  Future<bool> readFile() async {
+    try {
+      // Read the file
+      String fileContent = await myFile.readAsString();
+      setState(() {
+        fileText = fileContent;
+      });
+      return true;
+    } catch (e) {
+      // On error, return false
+      return false;
+    }
   }
 
   Future<void> readAndWritePreference() async {
@@ -105,19 +134,32 @@ class _MyHomePageState extends State<MyHomePage> {
     String json = convertToJSON(myPizzas);
     print(json);
 
-    // Langkah 6: Perbarui Tampilan
+    // Langkah 6: Edit build() dan Tambahkan Tombol Baca
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         title: const Text('Path Provider'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text('Doc path: $documentsPath'),
-          Text('Temp path: $tempPath'),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (documentsPath.isEmpty)
+              const Center(child: CircularProgressIndicator())
+            else ...[
+              Text('Doc path: $documentsPath'),
+              Text('Temp path: $tempPath'),
+              ElevatedButton(
+                child: const Text('Read File'),
+                onPressed: () => readFile(),
+              ),
+              Text(fileText),
+            ],
+          ],
+        ),
       ),
     );
   }

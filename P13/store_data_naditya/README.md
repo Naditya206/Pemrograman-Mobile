@@ -195,3 +195,82 @@ Kode dikatakan **maintainable** ketika mudah dibaca, dimodifikasi, dan dikembang
 
 Tidak ada path yang muncul, karena dijalankan melalui Emulator.
 ---
+
+## ✅ **Soal 8**
+
+**Instruksi:**
+
+- Jelaskan maksud kode pada langkah 3 dan 7!
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+- Lalu lakukan commit dengan pesan "W13: Jawaban Soal 8".
+
+---
+
+### 📝 **Penjelasan Kode**
+
+#### **Langkah 3: Method writeFile()**
+
+```dart
+Future<bool> writeFile() async {
+  try {
+    await myFile.writeAsString('Margherita, Capricciosa, Napoli');
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+```
+
+**Maksud:**
+- Method `writeFile()` adalah fungsi **asynchronous** yang menulis data ke file
+- **`myFile.writeAsString()`**: Menulis string ke dalam file `pizzas.txt`
+- **Try-Catch**: Menangani error yang mungkin terjadi saat menulis file
+  - Jika **berhasil** → return `true`
+  - Jika **gagal** → return `false`
+- **Fungsi**: Menyimpan data pizza ("Margherita, Capricciosa, Napoli") ke dalam file di direktori dokumen aplikasi
+
+**Kapan Dipanggil:**
+- Dipanggil di method `getPaths()` setelah path direktori dokumen didapat
+- File akan dibuat/ditimpa setiap kali aplikasi dijalankan
+
+---
+
+#### **Langkah 7: Run Aplikasi**
+
+Ketika aplikasi dijalankan, proses yang terjadi:
+
+1. **Aplikasi dimulai** → `initState()` dipanggil
+2. **`getPaths()`** dijalankan:
+   - Mendapat path direktori dokumen: `/data/user/0/com.example.app/app_flutter`
+   - Mendapat path direktori temporary: `/data/user/0/com.example.app/cache`
+3. **File diinisialisasi**: `myFile = File('$documentsPath/pizzas.txt')`
+4. **`writeFile()`** dipanggil otomatis:
+   - Membuat file `pizzas.txt` di direktori dokumen
+   - Menulis string "Margherita, Capricciosa, Napoli" ke file
+5. **UI menampilkan**:
+   - Path direktori dokumen
+   - Path direktori temporary
+   - Tombol "Read File"
+6. **Saat tombol "Read File" diklik**:
+   - Method `readFile()` dipanggil
+   - Membaca isi file `pizzas.txt`
+   - Menampilkan konten: "Margherita, Capricciosa, Napoli"
+
+
+**Operasi File:**
+- **Write**: Terjadi otomatis saat app start
+- **Read**: Terjadi saat user klik tombol "Read File"
+- **Location**: File tersimpan di internal storage aplikasi yang **persisten** (tidak hilang saat app ditutup)
+
+---
+
+### 📸 **Dokumentasi Tampilan Aplikasi**
+
+![alt text](img/gif2.gif)
+
+**Deskripsi:**
+- Aplikasi menampilkan path direktori dokumen dan temporary
+- Setelah klik tombol "Read File", konten file ditampilkan
+- File `pizzas.txt` berisi nama-nama pizza: "Margherita, Capricciosa, Napoli"
+
+---
