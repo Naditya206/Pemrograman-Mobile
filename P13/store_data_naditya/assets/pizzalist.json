@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "pizzaName": "Margherita",
     "description": "Pizza with tomato, fresh mozzarella and basil",
     "price": 1.75,
@@ -9,49 +9,46 @@
   },
   {
     "id": 2,
-    "pizzaName": "Marinara",
-    "description": "Pizza with tomato and garlic",
-    "price": 1.5,
+    "pizzaName": null,
+    "description": null,
+    "price": "1.5",
     "isVeg": true,
     "imageUrl": "images/marinara.png"
   },
   {
-    "id": 3,
+    "id": "3",
     "pizzaName": "Napoli",
-    "description": "Pizza with tomato, mozzarella and anchovies",
-    "price": 2.0,
+    "description": null,
+    "price": "2.0",
     "isVeg": false,
     "imageUrl": "images/marinara.png"
   },
   {
-    "id": 4,
     "pizzaName": "Diavola",
     "description": "Pizza with tomato, mozzarella and spicy salami",
     "price": 2.5,
     "isVeg": false,
-    "imageUrl": "images/marinara.png"
+    "imageUrl": null
   },
   {
     "id": 5,
     "pizzaName": "Pizza Bianca",
     "description": "Pizza with mozzarella, fresh ricotta and parmesan",
-    "price": 2.5,
+    "price": null,
     "isVeg": true,
     "imageUrl": "images/marinara.png"
   },
   {
-    "id": 6,
+    "id": "6",
     "pizzaName": "Pizza Capricciosa",
     "description": "Pizza with tomato, mozzarella, mushrooms and artichokes",
-    "price": 2.5,
-    "isVeg": true,
-    "imageUrl": "images/marinara.png"
+    "price": "2.5",
+    "isVeg": true
   },
   {
     "id": 7,
-    "pizzaName": "Pizza Bufalina",
     "description": "Pizza with tomato, buffalo mozzarella and basil",
-    "price": 2.5,
+    "price": "2.5",
     "isVeg": true,
     "imageUrl": "images/marinara.png"
   }

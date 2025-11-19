@@ -52,6 +52,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/pizzalist.json
+    - assets/pizzalist_broken.json
 
 
   # The following line ensures that the Material Icons font is

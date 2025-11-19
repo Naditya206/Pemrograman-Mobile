@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",                     
+    "pizzaName": "Pepperoni",      
+    "description": "Classic pepperoni pizza",
+    "price": "45000",              
+    "imageUrl": "assets/pepperoni.png"
+  },
+  {
+    "id": "2",
+    "pizzaName": null,             
+    "description": 12345,          
+    "price": "50000",
+    "imageUrl": null               
+  },
+  {
+    "id": "3",
+    "pizzaName": "Cheese Pizza",
+    "description": "Extra cheese",
+    "price": "abc",                
+    "imageUrl": "assets/cheese.png"
+  },
+  {
+    "id": "4",
+    "pizzaName": "Hawaiian",
+    "description": "Pineapple lovers",
+    "price": 60000,                
+    "imageUrl": null               
+  }
+]

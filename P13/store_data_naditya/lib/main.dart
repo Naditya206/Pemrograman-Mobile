@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<List<Pizza>> readJsonFile() async {
     final String myString =
-        await DefaultAssetBundle.of(context).loadString('assets/pizzalist.json');
+        await DefaultAssetBundle.of(context).loadString('assets/pizzalist_broken.json');
     final List<dynamic> pizzaMapList = jsonDecode(myString);
 
     final List<Pizza> pizzas = List<Pizza>.from(
@@ -53,8 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return pizzas;
   }
 
+  String convertToJSON(List<Pizza> pizzas) {
+    return jsonEncode(pizzas.map((pizza) => pizza.toJson()).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Cetak JSON hasil konversi ke konsol
+    String json = convertToJSON(myPizzas);
+    print(json);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -68,15 +76,17 @@ class _MyHomePageState extends State<MyHomePage> {
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListTile(
-              leading: Image.asset(
-                pizza.imageUrl,
-                width: 50,
-                height: 50,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.local_pizza),
-              ),
+              leading: pizza.imageUrl.isNotEmpty
+                ? Image.asset(
+                    pizza.imageUrl,
+                    width: 50,
+                    height: 50,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.local_pizza),
+                  )
+                : const Icon(Icons.local_pizza),
               title: Text(pizza.pizzaName),
-              subtitle: Text(pizza.description),
+              subtitle: Text(pizza.description.isNotEmpty ? pizza.description : 'No description'),
               trailing: Text(
                 'Rp ${pizza.price.toStringAsFixed(2)}',
                 style: const TextStyle(fontWeight: FontWeight.bold),

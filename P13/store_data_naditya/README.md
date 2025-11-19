@@ -70,3 +70,18 @@ W13: Jawaban Soal 3
 
 ---
 
+## ✅ **Soal 4**
+
+**Instruksi:**
+
+- Capture hasil running aplikasi Anda, kemudian impor ke laporan praktikum Anda!
+- Lalu lakukan commit dengan pesan "W13: Jawaban Soal 4".
+
+---
+
+### 📸 **Dokumentasi Tampilan Aplikasi**
+
+![alt text](img/img5.png)
+
+---
+
