@@ -179,3 +179,19 @@ Kode dikatakan **maintainable** ketika mudah dibaca, dimodifikasi, dan dikembang
 ![alt text](img/gif1.gif)
 
 ---
+
+## ✅ **Soal 7**
+
+**Instruksi:**
+
+- Capture hasil praktikum Anda dan lampirkan di README.
+- Lalu lakukan commit dengan pesan "W13: Jawaban Soal 7".
+
+---
+
+### 📸 **Dokumentasi Tampilan Aplikasi**
+
+![alt text](img/img7.png)
+
+Tidak ada path yang muncul, karena dijalankan melalui Emulator.
+---

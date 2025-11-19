@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 import 'model/pizza.dart';
 
 void main() {
@@ -31,14 +32,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Pizza> myPizzas = [];
-  
-  // Langkah 4: Tambahkan variabel appCounter
   int appCounter = 0;
+  
+  // Langkah 3: Tambahkan variabel Path State
+  String documentsPath = '';
+  String tempPath = '';
 
   @override
   void initState() {
     super.initState();
-    // Langkah 10: Panggil readAndWritePreference() di initState
+    // Langkah 5: Panggil getPaths() di initState()
+    getPaths();
+    
     readAndWritePreference();
     
     readJsonFile().then((value) {
@@ -48,25 +53,28 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // Langkah 5: Buat Method readAndWritePreference()
-  Future<void> readAndWritePreference() async {
-    // Langkah 6: Dapatkan instance SharedPreferences
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  // Langkah 4: Buat Method getPaths()
+  Future<void> getPaths() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
     
-    // Langkah 7: Baca, Cek Null, dan Increment Counter
+    setState(() {
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
+    });
+  }
+
+  Future<void> readAndWritePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     int counter = prefs.getInt('appCounter') ?? 0;
     counter++;
-    
-    // Langkah 8: Simpan nilai baru
     await prefs.setInt('appCounter', counter);
     
-    // Langkah 9: Perbarui State
     setState(() {
       appCounter = counter;
     });
   }
 
-  // Langkah 13: Buat Method deletePreference()
   Future<void> deletePreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
@@ -97,30 +105,19 @@ class _MyHomePageState extends State<MyHomePage> {
     String json = convertToJSON(myPizzas);
     print(json);
 
+    // Langkah 6: Perbarui Tampilan
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: const Text('Shared Preferences Naditya'),
+        title: const Text('Path Provider'),
       ),
-      // Langkah 11: Perbarui Tampilan (body)
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              'You have opened the app $appCounter times.',
-              style: const TextStyle(fontSize: 18),
-            ),
-            // Langkah 14: Panggil deletePreference()
-            ElevatedButton(
-              onPressed: () {
-                deletePreference();
-              },
-              child: const Text('Reset counter'),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text('Doc path: $documentsPath'),
+          Text('Temp path: $tempPath'),
+        ],
       ),
     );
   }
