@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'model/pizza.dart';
 
 void main() {
@@ -30,10 +31,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Pizza> myPizzas = [];
+  
+  // Langkah 4: Tambahkan variabel appCounter
+  int appCounter = 0;
 
   @override
   void initState() {
     super.initState();
+    // Langkah 10: Panggil readAndWritePreference() di initState
+    readAndWritePreference();
+    
     readJsonFile().then((value) {
       setState(() {
         myPizzas = value;
@@ -41,9 +48,37 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // Langkah 5: Buat Method readAndWritePreference()
+  Future<void> readAndWritePreference() async {
+    // Langkah 6: Dapatkan instance SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    // Langkah 7: Baca, Cek Null, dan Increment Counter
+    int counter = prefs.getInt('appCounter') ?? 0;
+    counter++;
+    
+    // Langkah 8: Simpan nilai baru
+    await prefs.setInt('appCounter', counter);
+    
+    // Langkah 9: Perbarui State
+    setState(() {
+      appCounter = counter;
+    });
+  }
+
+  // Langkah 13: Buat Method deletePreference()
+  Future<void> deletePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    
+    setState(() {
+      appCounter = 0;
+    });
+  }
+
   Future<List<Pizza>> readJsonFile() async {
     final String myString =
-        await DefaultAssetBundle.of(context).loadString('assets/pizzalist_broken.json');
+        await DefaultAssetBundle.of(context).loadString('assets/pizzalist.json');
     final List<dynamic> pizzaMapList = jsonDecode(myString);
 
     final List<Pizza> pizzas = List<Pizza>.from(
@@ -59,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Cetak JSON hasil konversi ke konsol
     String json = convertToJSON(myPizzas);
     print(json);
 
@@ -67,33 +101,26 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: const Text('JSON Naditya'),
+        title: const Text('Shared Preferences Naditya'),
       ),
-      body: ListView.builder(
-        itemCount: myPizzas.length,
-        itemBuilder: (context, index) {
-          final pizza = myPizzas[index];
-          return Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListTile(
-              leading: pizza.imageUrl.isNotEmpty
-                ? Image.asset(
-                    pizza.imageUrl,
-                    width: 50,
-                    height: 50,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.local_pizza),
-                  )
-                : const Icon(Icons.local_pizza),
-              title: Text(pizza.pizzaName),
-              subtitle: Text(pizza.description.isNotEmpty ? pizza.description : 'No description'),
-              trailing: Text(
-                'Rp ${pizza.price.toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+      // Langkah 11: Perbarui Tampilan (body)
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'You have opened the app $appCounter times.',
+              style: const TextStyle(fontSize: 18),
             ),
-          );
-        },
+            // Langkah 14: Panggil deletePreference()
+            ElevatedButton(
+              onPressed: () {
+                deletePreference();
+              },
+              child: const Text('Reset counter'),
+            ),
+          ],
+        ),
       ),
     );
   }

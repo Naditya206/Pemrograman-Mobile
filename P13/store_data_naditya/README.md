@@ -165,3 +165,17 @@ Kode dikatakan **maintainable** ketika mudah dibaca, dimodifikasi, dan dikembang
 
 ---
 
+## ✅ **Soal 6**
+
+**Instruksi:**
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+- Lalu lakukan commit dengan pesan "W13: Jawaban Soal 6".
+
+---
+
+### 📸 **Dokumentasi Tampilan Aplikasi**
+
+![alt text](img/gif1.gif)
+
+---
