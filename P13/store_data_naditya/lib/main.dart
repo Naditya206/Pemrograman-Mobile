@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'model/pizza.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,35 +29,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String pizzaString = ""; // Variabel untuk menyimpan isi JSON
+  List<Pizza> myPizzas = [];
 
   @override
   void initState() {
     super.initState();
-    readJsonFile(); // Panggil method saat widget diinisialisasi
-  }
-
-  Future<void> readJsonFile() async {
-    String myString = await DefaultAssetBundle.of(context)
-        .loadString("assets/pizzalist.json");
-    setState(() {
-      pizzaString = myString;
+    readJsonFile().then((value) {
+      setState(() {
+        myPizzas = value;
+      });
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.blue,
-      foregroundColor: Colors.white,
-      title: const Text('JSON Naditya'),
-    ),
-    body: SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Text(pizzaString),
-    ),
-  );
-}
-}
+  Future<List<Pizza>> readJsonFile() async {
+    final String myString =
+        await DefaultAssetBundle.of(context).loadString('assets/pizzalist.json');
+    final List<dynamic> pizzaMapList = jsonDecode(myString);
 
+    final List<Pizza> pizzas = List<Pizza>.from(
+      pizzaMapList.map((pizzaMap) => Pizza.fromJson(pizzaMap)),
+    );
+
+    return pizzas;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        title: const Text('JSON Naditya'),
+      ),
+      body: ListView.builder(
+        itemCount: myPizzas.length,
+        itemBuilder: (context, index) {
+          final pizza = myPizzas[index];
+          return Card(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: ListTile(
+              leading: Image.asset(
+                pizza.imageUrl,
+                width: 50,
+                height: 50,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.local_pizza),
+              ),
+              title: Text(pizza.pizzaName),
+              subtitle: Text(pizza.description),
+              trailing: Text(
+                'Rp ${pizza.price.toStringAsFixed(2)}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

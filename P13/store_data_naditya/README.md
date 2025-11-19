@@ -45,3 +45,28 @@ W13: Jawaban Soal 2
 ![alt text](img/img1.png)
 
 ---
+
+Berikut format markdown yang bisa kamu gunakan untuk menyusun laporan praktikum **Soal 3**:
+
+---
+
+## ✅ **Soal 3**
+
+**Instruksi:**
+
+- Masukkan hasil capture layar ke laporan praktikum Anda.
+- Lakukan commit hasil jawaban Soal 3 dengan pesan:
+
+```bash
+W13: Jawaban Soal 3
+```
+
+---
+
+### 📸 **Dokumentasi Tampilan Aplikasi**
+
+![alt text](img/img2.png)
+> Contoh: Tampilan daftar pizza yang berhasil ditampilkan menggunakan `ListView.builder`, menampilkan `pizzaName` dan `description`.
+
+---
+
