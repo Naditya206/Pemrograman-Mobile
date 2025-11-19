@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'model/pizza.dart';
 
 void main() {
@@ -37,9 +38,16 @@ class _MyHomePageState extends State<MyHomePage> {
   String documentsPath = '';
   String tempPath = '';
   
-  // Langkah 2: Tambahkan variabel File dan Text
   late File myFile;
   String fileText = '';
+
+  // Langkah 3: Tambahkan Variabel dan Controller
+  final pwdController = TextEditingController();
+  String myPass = '';
+
+  // Langkah 4: Inisialisasi Secure Storage
+  final storage = const FlutterSecureStorage();
+  final myKey = 'myPass';
 
   @override
   void initState() {
@@ -63,12 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
       tempPath = tempDir.path;
     });
     
-    // Langkah 4: Inisialisasi File dan Panggil writeFile()
     myFile = File('$documentsPath/pizzas.txt');
     writeFile();
   }
 
-  // Langkah 3: Buat Method writeFile()
   Future<bool> writeFile() async {
     try {
       await myFile.writeAsString('Naditya, 244107023008');
@@ -78,17 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  // Langkah 5: Buat Method readFile()
   Future<bool> readFile() async {
     try {
-      // Read the file
       String fileContent = await myFile.readAsString();
       setState(() {
         fileText = fileContent;
       });
       return true;
     } catch (e) {
-      // On error, return false
       return false;
     }
   }
@@ -129,36 +132,99 @@ class _MyHomePageState extends State<MyHomePage> {
     return jsonEncode(pizzas.map((pizza) => pizza.toJson()).toList());
   }
 
+  // Langkah 5: Buat Method writeToSecureStorage()
+  Future writeToSecureStorage() async {
+    await storage.write(key: myKey, value: pwdController.text);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Data berhasil disimpan!')),
+    );
+  }
+
+  // Langkah 6: Buat Method readFromSecureStorage()
+  Future<String> readFromSecureStorage() async {
+    String secret = await storage.read(key: myKey) ?? '';
+    return secret;
+  }
+
   @override
   Widget build(BuildContext context) {
     String json = convertToJSON(myPizzas);
     print(json);
 
-    // Langkah 6: Edit build() dan Tambahkan Tombol Baca
+    // Langkah 7: Edit build() untuk UI dan Logic
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         title: const Text('Path Provider'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (documentsPath.isEmpty)
-              const Center(child: CircularProgressIndicator())
-            else ...[
-              Text('Doc path: $documentsPath'),
-              Text('Temp path: $tempPath'),
-              ElevatedButton(
-                child: const Text('Read File'),
-                onPressed: () => readFile(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              // TextField untuk input password
+              TextField(
+                controller: pwdController,
+                decoration: const InputDecoration(
+                  hintText: 'Super Secret String!',
+                  border: UnderlineInputBorder(),
+                ),
               ),
-              Text(fileText),
+              const SizedBox(height: 20),
+              // Tombol Save Value
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[300],
+                    foregroundColor: Colors.black,
+                    elevation: 2,
+                  ),
+                  child: const Text('Save Value'),
+                  onPressed: () {
+                    writeToSecureStorage();
+                  },
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Langkah 8: Hubungkan Read ke Tombol
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[300],
+                    foregroundColor: Colors.black,
+                    elevation: 2,
+                  ),
+                  child: const Text('Read Value'),
+                  onPressed: () {
+                    readFromSecureStorage().then((value) {
+                      setState(() {
+                        myPass = value;
+                      });
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                myPass.isEmpty ? 'Super Secret String!' : myPass,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (myPass.isNotEmpty)
+                Text(
+                  '(Data berhasil dibaca)',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.green[700],
+                  ),
+                ),
             ],
-          ],
+          ),
         ),
       ),
     );

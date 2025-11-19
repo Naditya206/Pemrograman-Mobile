@@ -274,3 +274,17 @@ Ketika aplikasi dijalankan, proses yang terjadi:
 - File `pizzas.txt` berisi nama-nama pizza: "Margherita, Capricciosa, Napoli"
 
 ---
+
+## ✅ **Soal 9**
+
+**Instruksi:**
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+- Lalu lakukan commit dengan pesan "W13: Jawaban Soal 9".
+
+---
+
+### 📸 **Dokumentasi Tampilan Aplikasi**
+
+![alt text](img/gif3.gif)
+---
