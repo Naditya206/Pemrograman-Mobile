@@ -52,3 +52,19 @@ Setelah menambahkan 3 field baru
 
 
 ---
+
+### ✅ **Soal 3**
+
+**Instruksi:**
+
+- Ubah salah satu data dengan Nama dan NIM Anda, lalu perhatikan hasilnya di Wiremock.
+
+- Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 3 dengan pesan "W14: Jawaban Soal 3"
+
+```bash
+W14: Jawaban Soal 3
+```
+
+![alt text](img/gif3.gif)
+
+---
