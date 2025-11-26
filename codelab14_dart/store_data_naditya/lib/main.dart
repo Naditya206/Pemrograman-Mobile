@@ -83,21 +83,56 @@ class _MyHomePageState extends State<MyHomePage> {
             return ListView.builder(
               itemCount: pizzas.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(pizzas[index].pizzaName),
-                  subtitle: Text(
-                      "${pizzas[index].description} - € ${pizzas[index].price}"),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PizzaDetailScreen(
-                          pizza: pizzas[index],
-                          isNew: false,
-                        ),
-                      ),
+                return Dismissible(
+                  key: Key(pizzas[index].id.toString()),
+                  direction: DismissDirection.endToStart,
+
+                  // Ketika diswipe / dismissed
+                  onDismissed: (direction) async {
+                    HttpHelper helper = HttpHelper();
+
+                    // simpan id sebelum dihapus
+                    final deletedId = pizzas[index].id;
+
+                    // hapus dari list UI
+                    setState(() {
+                      pizzas.removeAt(index);
+                    });
+
+                    // hapus di Wiremock
+                    if (deletedId != null) {
+                      await helper.deletePizza(deletedId);
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Pizza deleted")),
                     );
                   },
+
+                  // Background swipe merah
+                  background: Container(
+                    color: Colors.red,
+                    padding: const EdgeInsets.only(right: 16),
+                    alignment: Alignment.centerRight,
+                    child: const Icon(Icons.delete, color: Colors.white),
+                  ),
+
+                  child: ListTile(
+                    title: Text(pizzas[index].pizzaName),
+                    subtitle: Text(
+                        "${pizzas[index].description} - € ${pizzas[index].price}"),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PizzaDetailScreen(
+                            pizza: pizzas[index],
+                            isNew: false,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             );

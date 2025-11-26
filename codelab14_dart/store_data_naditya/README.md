@@ -68,3 +68,17 @@ W14: Jawaban Soal 3
 ![alt text](img/gif3.gif)
 
 ---
+
+### ✅ **Soal 4**
+
+**Instruksi:**
+
+- Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 4 dengan pesan "W14: Jawaban Soal 4"
+
+```bash
+W14: Jawaban Soal 4
+```
+
+![alt text](img/gif4.gif)
+
+---
