@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RestFull Api Naditya',     // 🔥 sesuai instruksi W14
+      title: 'RestFull API Naditya',
       theme: ThemeData(
-        primarySwatch: Colors.blue,      // 🔥 warna kesukaan
+        primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
     );
@@ -35,13 +35,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<List<Pizza>> callPizzas() async {
-    try {
-      HttpHelper helper = HttpHelper();
-      List<Pizza> pizzas = await helper.getPizzaList();
-      return pizzas;
-    } catch (e) {
-      rethrow;
-    }
+    HttpHelper helper = HttpHelper();
+    return await helper.getPizzaList();
   }
 
   List<Pizza> myPizzas = [];
@@ -65,9 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // ================================
-  //          FILE HANDLING
-  // ================================
   Future<void> getPaths() async {
     final docDir = await getApplicationDocumentsDirectory();
     final tempDir = await getTemporaryDirectory();
@@ -90,44 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<bool> readFile() async {
-    try {
-      String fileContent = await myFile.readAsString();
-      setState(() {
-        fileText = fileContent;
-      });
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  // ================================
-  //       SHARED PREFERENCES
-  // ================================
-  Future<void> readAndWritePreference() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int counter = prefs.getInt('appCounter') ?? 0;
-    counter++;
-    await prefs.setInt('appCounter', counter);
-
-    setState(() {
-      appCounter = counter;
-    });
-  }
-
-  Future<void> deletePreference() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-
-    setState(() {
-      appCounter = 0;
-    });
-  }
-
-  // ================================
-  //           JSON READER
-  // ================================
   Future<List<Pizza>> readJsonFile() async {
     final String myString =
         await DefaultAssetBundle.of(context).loadString('assets/pizzalist.json');
@@ -139,23 +93,24 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  String convertToJSON(List<Pizza> pizzas) {
-    return jsonEncode(pizzas.map((pizza) => pizza.toJson()).toList());
-  }
+  Future<void> readAndWritePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  // ================================
-  //             UI
-  // ================================
+    int counter = prefs.getInt('appCounter') ?? 0;
+    counter++;
+    await prefs.setInt('appCounter', counter);
+
+    setState(() {
+      appCounter = counter;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    String json = convertToJSON(myPizzas);
-    debugPrint(json);
-
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        title: const Text('RestFull Api Naditya'),
+        backgroundColor: Colors.blue,   // ✔ warna biru
+        foregroundColor: Colors.white,  // ✔ teks putih
+        title: const Text('RestFull API Naditya'),
       ),
 
       floatingActionButton: FloatingActionButton(
@@ -174,24 +129,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
+
               const Text(
                 "Daftar Pizza dari API",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+
               const SizedBox(height: 10),
 
               FutureBuilder<List<Pizza>>(
                 future: callPizzas(),
-                builder: (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
+                builder:
+                    (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
+
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
+
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Text('Tidak ada data pizza');
                   }
@@ -202,13 +161,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       final pizza = snapshot.data![index];
-                      final name = pizza.pizzaName ?? 'No name';
-                      final desc = pizza.description ?? '-';
-                      final price = pizza.price ?? 0.0;
 
-                      return ListTile(
-                        title: Text(name),
-                        subtitle: Text("$desc - € ${price.toString()}"),
+                      return Card(
+                        elevation: 2,
+                        child: ListTile(
+                          title: Text(pizza.pizzaName),
+                          subtitle: Text(
+                            "${pizza.description}\n"
+                            "Category: ${pizza.category}\n"
+                            "Available: ${pizza.isAvailable}\n"
+                            "Rating: ${pizza.rating}\n"
+                            "€ ${pizza.price}",
+                          ),
+                          isThreeLine: true,
+                        ),
                       );
                     },
                   );

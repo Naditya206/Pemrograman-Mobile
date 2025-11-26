@@ -1,55 +1,52 @@
 [
-  {
-    "id": "1",
+  { 
+    "id": 1,
     "pizzaName": "Margherita",
     "description": "Pizza with tomato, fresh mozzarella and basil",
-    "price": 1.75,
-    "isVeg": true,
-    "imageUrl": "images/margherita.png"
+    "price": 8.75,
+    "imageUrl": "images/margherita.png",
+    "category": "Classic",
+    "isAvailable": true,
+    "rating": 4.7
   },
-  {
-    "id": 2,
-    "pizzaName": null,
-    "description": null,
-    "price": "1.5",
-    "isVeg": true,
-    "imageUrl": "images/marinara.png"
+  { 
+    "id": 2, 
+    "pizzaName": "Marinara",
+    "description": "Pizza with tomato, garlic and oregano",
+    "price": 7.50,
+    "imageUrl": "images/marinara.png",
+    "category": "Classic",
+    "isAvailable": true,
+    "rating": 4.5
   },
-  {
-    "id": "3",
+  { 
+    "id": 3, 
     "pizzaName": "Napoli",
-    "description": null,
-    "price": "2.0",
-    "isVeg": false,
-    "imageUrl": "images/marinara.png"
+    "description": "Pizza with tomato, garlic and anchovies",
+    "price": 9.50,
+    "imageUrl": "images/marinara.png",
+    "category": "Seafood",
+    "isAvailable": false,
+    "rating": 4.2
   },
-  {
-    "pizzaName": "Diavola",
-    "description": "Pizza with tomato, mozzarella and spicy salami",
-    "price": 2.5,
-    "isVeg": false,
-    "imageUrl": null
-  },
-  {
+  { 
+    "id": 4,
+    "pizzaName": "Carciofi",
+    "description": "Pizza with tomato, fresh mozzarella and artichokes",
+    "price": 8.80,
+    "imageUrl": "images/marinara.png",
+    "category": "Vegetarian",
+    "isAvailable": true,
+    "rating": 4.3
+  }, 
+  { 
     "id": 5,
-    "pizzaName": "Pizza Bianca",
-    "description": "Pizza with mozzarella, fresh ricotta and parmesan",
-    "price": null,
-    "isVeg": true,
-    "imageUrl": "images/marinara.png"
-  },
-  {
-    "id": "6",
-    "pizzaName": "Pizza Capricciosa",
-    "description": "Pizza with tomato, mozzarella, mushrooms and artichokes",
-    "price": "2.5",
-    "isVeg": true
-  },
-  {
-    "id": 7,
+    "pizzaName": "Bufala",
     "description": "Pizza with tomato, buffalo mozzarella and basil",
-    "price": "2.5",
-    "isVeg": true,
-    "imageUrl": "images/marinara.png"
+    "price": 12.50,
+    "imageUrl": "images/marinara.png",
+    "category": "Premium",
+    "isAvailable": true,
+    "rating": 4.8
   }
 ]

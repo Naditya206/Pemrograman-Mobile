@@ -31,3 +31,24 @@ MaterialApp(
 
 
 ---
+
+### ✅ **Soal 2**
+
+**Instruksi:**
+
+- Tambahkan field baru dalam JSON maupun POST ke Wiremock!
+- Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 2 dengan pesan "W14: Jawaban Soal 2"
+
+```bash
+W14: Jawaban Soal 2
+```
+Sebelum menambahkan 3 field baru
+
+![alt text](img/gif1.gif)
+
+Setelah menambahkan 3 field baru
+
+![alt text](img/gif2.gif)
+
+
+---

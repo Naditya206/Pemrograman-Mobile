@@ -1,35 +1,41 @@
-import 'dart:io'; 
-import 'package:http/http.dart' as http; 
-import 'dart:convert'; 
-import './model/pizza.dart'; 
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import './model/pizza.dart';
 
 class HttpHelper {
+  // ⚠️ Ganti authority sesuai WireMock instance-mu
   final String authority = 'le5yg.wiremockapi.cloud';
-  final String path = '/pizzalist';
+  final String getPath = 'pizzalist'; // no leading slash for Uri.https
+
   Future<List<Pizza>> getPizzaList() async {
-    final Uri url = Uri.https(authority, path);
+    final Uri url = Uri.https(authority, getPath);
     final http.Response result = await http.get(url);
+
     if (result.statusCode == HttpStatus.ok) {
       final jsonResponse = json.decode(result.body);
-      //provide a type argument to the map method to avoid type 
-      //error
-      List<Pizza> pizzas =
-          jsonResponse.map<Pizza>((i) => 
-            Pizza.fromJson(i)).toList();
+      List<Pizza> pizzas = List<Pizza>.from(
+        (jsonResponse as List).map((i) => Pizza.fromJson(i as Map<String, dynamic>),
+      ));
       return pizzas;
     } else {
       return [];
     }
   }
-Future<String> postPizza(Pizza pizza) async {
-  const postPath = '/pizza';
-  String post = json.encode(pizza.toJson());
-  Uri url = Uri.https(authority, postPath);
-  http.Response r = await http.post(
-    url,
-    body: post,
-  );
-  return r.body;
-}
 
+  Future<String> postPizza(Pizza pizza) async {
+    const String postPath = 'pizza'; // POST stub path (no leading slash)
+    String post = json.encode(pizza.toJson());
+    Uri url = Uri.https(authority, postPath);
+
+    final http.Response r = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: post,
+    );
+
+    return r.body;
+  }
 }
