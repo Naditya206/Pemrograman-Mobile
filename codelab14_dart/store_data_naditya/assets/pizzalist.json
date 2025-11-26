@@ -1,0 +1,55 @@
+[
+  {
+    "id": "1",
+    "pizzaName": "Margherita",
+    "description": "Pizza with tomato, fresh mozzarella and basil",
+    "price": 1.75,
+    "isVeg": true,
+    "imageUrl": "images/margherita.png"
+  },
+  {
+    "id": 2,
+    "pizzaName": null,
+    "description": null,
+    "price": "1.5",
+    "isVeg": true,
+    "imageUrl": "images/marinara.png"
+  },
+  {
+    "id": "3",
+    "pizzaName": "Napoli",
+    "description": null,
+    "price": "2.0",
+    "isVeg": false,
+    "imageUrl": "images/marinara.png"
+  },
+  {
+    "pizzaName": "Diavola",
+    "description": "Pizza with tomato, mozzarella and spicy salami",
+    "price": 2.5,
+    "isVeg": false,
+    "imageUrl": null
+  },
+  {
+    "id": 5,
+    "pizzaName": "Pizza Bianca",
+    "description": "Pizza with mozzarella, fresh ricotta and parmesan",
+    "price": null,
+    "isVeg": true,
+    "imageUrl": "images/marinara.png"
+  },
+  {
+    "id": "6",
+    "pizzaName": "Pizza Capricciosa",
+    "description": "Pizza with tomato, mozzarella, mushrooms and artichokes",
+    "price": "2.5",
+    "isVeg": true
+  },
+  {
+    "id": 7,
+    "description": "Pizza with tomato, buffalo mozzarella and basil",
+    "price": "2.5",
+    "isVeg": true,
+    "imageUrl": "images/marinara.png"
+  }
+]
